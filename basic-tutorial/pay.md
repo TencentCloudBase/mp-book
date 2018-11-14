@@ -145,82 +145,80 @@ const {
 
 ```js
 // 获取订单详情
-getOrder: async function () {
+async getOrder() {
+const {result} = await wx.cloud.callFunction({
+    name: 'pay',
+    data: {
+    type: 'orderquery',
+    data: {
+        out_trade_no: this.data.out_trade_no
+    }
+    }
+})
 
-    const { result } = await wx.cloud.callFunction({
-        name: 'pay',
-        data: {
-            type: 'orderquery',
-            data: {
-                out_trade_no: this.data.out_trade_no
-            }
-        }
-    });
+const data = result.data || {}
 
-    let data = result.data || {};
-
-    this.setData({
-        order: data
-    }, () => {
-        // 如果状态是退款中，则每次进来都会查询一下退款情况
-        if (data.status === 3) {
-            this.queryRefund();
-        }
-    });
+this.setData({
+    order: data
+}, () => {
+    // 如果状态是退款中，则每次进来都会查询一下退款情况
+    if (data.status === 3) {
+    this.queryRefund()
+    }
+})
 },
 
 // 发起支付
 pay() {
-    let orderQuery = this.data.order;
-    let out_trade_no = this.data.out_trade_no;
+const orderQuery = this.data.order
+const out_trade_no = this.data.out_trade_no
 
-    const {
-        time_stamp,
-        nonce_str,
-        sign,
-        sign_type,
-        prepay_id,
-        body,
-        total_fee
-    } = orderQuery;
+const {
+    time_stamp,
+    nonce_str,
+    sign,
+    prepay_id,
+    body,
+    total_fee
+} = orderQuery
 
-    wx.requestPayment({
-        timeStamp: time_stamp,
-        nonceStr: nonce_str,
-        package: `prepay_id=${prepay_id}`,
-        signType: 'MD5',
-        paySign: sign,
-        success: async (res) => {
-            wx.showLoading({
-                title: '正在支付',
-            });
+wx.requestPayment({
+    timeStamp: time_stamp,
+    nonceStr: nonce_str,
+    package: `prepay_id=${prepay_id}`,
+    signType: 'MD5',
+    paySign: sign,
+    success: async () => {
+    wx.showLoading({
+        title: '正在支付',
+    })
 
-            wx.showToast({
-                title: '支付成功',
-                icon: 'success',
-                duration: 1500,
-                success: async () => {
-                    this.getOrder();
+    wx.showToast({
+        title: '支付成功',
+        icon: 'success',
+        duration: 1500,
+        success: async () => {
+        this.getOrder()
 
-                    await wx.cloud.callFunction({
-                        name: 'pay',
-                        data: {
-                            type: 'payorder',
-                            data: {
-                                body,
-                                prepay_id,
-                                out_trade_no,
-                                total_fee
-                            }
-                        }
-                    });
-                    wx.hideLoading();
-                }
-            });
-        },
-        fail: function (res) { }
-    });
-}
+        await wx.cloud.callFunction({
+            name: 'pay',
+            data: {
+            type: 'payorder',
+            data: {
+                body,
+                prepay_id,
+                out_trade_no,
+                total_fee
+            }
+            }
+        })
+        wx.hideLoading()
+        }
+    })
+    },
+    fail() {}
+})
+},
 ```
 
 这里截取了云函数 `pay` 的 `payorder` 处理分支，主要就是通过 `pay.orderQuery` 查询微信服务端，如果支付成功，就会更新订单数据，并取发送一条模板消息告诉用户支付成功（模板消息详细教程请参考[模板消息和统一服务消息](basic-tutorial/message.md)教程）。
@@ -229,66 +227,68 @@ pay() {
 // 进行微信支付及更新订单状态
 case 'payorder': {
     const {
-        out_trade_no,
-        prepay_id,
-        body,
-        total_fee
-    } = data;
+    out_trade_no,
+    prepay_id,
+    body,
+    total_fee
+    } = data
 
-    const { return_code, ...restData } = await pay.orderQuery({
-        out_trade_no
-    });
+    const {return_code, ...restData} = await pay.orderQuery({
+    out_trade_no
+    })
 
     if (restData.trade_state === 'SUCCESS') {
-        let result = await orderCollection
-            .where({ out_trade_no })
-            .update({
-                data: {
-                    status: 1,
-                    trade_state: restData.trade_state,
-                    trade_state_desc: restData.trade_state_desc
-                }
-            });
+    await orderCollection
+        .where({out_trade_no})
+        .update({
+        data: {
+            status: 1,
+            trade_state: restData.trade_state,
+            trade_state_desc: restData.trade_state_desc
+        }
+        })
 
-        
-        let curDate = new Date();
-        let time = `${curDate.getFullYear()}-${curDate.getMonth() + 1}-${curDate.getDate()} ${curDate.getHours()}:${curDate.getMinutes()}:${curDate.getSeconds()}`;
-        try {
-            // 发送模板消息通知用户支付成功
-            let messageResult = await cloud.callFunction({
-            name: 'pay-message',
+    // console.log('======restData======');
+    // console.log(restData);
+
+    const curDate = new Date()
+    const time = `${curDate.getFullYear()}-${curDate.getMonth() + 1}-${curDate.getDate()} ${curDate.getHours()}:${curDate.getMinutes()}:${curDate.getSeconds()}`
+    try {
+        const messageResult = await cloud.callFunction({
+        name: 'pay-message',
+        data: {
+            formId: prepay_id,
+            openId: OPENID,
+            appId: APPID,
+            page: `/pages/pay-result/index?id=${out_trade_no}`,
             data: {
-                formId: prepay_id, // 微信支付的id
-                openId: OPENID, // 用户 openid
-                appId: APPID, // 小程序 appid
-                page: `/pages/pay-result/index?id=${out_trade_no}`, // 模板消息卡片点击后跳转的小程序页面
-                data: {
-                    keyword1: {
-                        value: out_trade_no // 订单号
-                    },
-                    keyword2: {
-                        value: body // 物品名称
-                    },
-                    keyword3: {
-                        value: time// 支付时间
-                    },
-                    keyword4: {
-                        value: (total_fee / 100) + "元" // 支付金额
-                    }
-                }
+            keyword1: {
+                value: out_trade_no // 订单号
+            },
+            keyword2: {
+                value: body // 物品名称
+            },
+            keyword3: {
+                value: time// 支付时间
+            },
+            keyword4: {
+                value: (total_fee / 100) + '元' // 支付金额
             }
-            });
-            console.log(messageResult);
+            }
         }
-        catch (e) {
-            console.log(e);
-        }
+        })
+        console.log('=======message=========')
+        console.log(messageResult)
+    } catch (e) {
+        console.log('===========')
+        console.log(e)
+    }
     }
 
     return {
-        code: return_code === 'SUCCESS' ? 0 : 1,
-        data: restData
-    };
+    code: return_code === 'SUCCESS' ? 0 : 1,
+    data: restData
+    }
 }
 ```
 
@@ -299,39 +299,38 @@ case 'payorder': {
 ```js
 // 申请退款，但不会马上退
 async refund() {
-    wx.showLoading({
-        title: '正在申请退款',
-    });
+wx.showLoading({
+    title: '正在申请退款',
+})
 
-    let result = await wx.cloud.callFunction({
-        name: 'pay',
-        data: {
-            type: 'refund',
-            data: {
-                out_trade_no: this.data.out_trade_no
-            }
-        }
-    });
-
-    wx.hideLoading();
-
-    if (!result.code) {
-        let order = this.data.order;
-        order.trade_state_desc = '正在退款';
-        order.status = 3;
-        order.trade_state = 'REFUNDING';
-
-        this.setData({
-            order: order
-        });
+const result = await wx.cloud.callFunction({
+    name: 'pay',
+    data: {
+    type: 'refund',
+    data: {
+        out_trade_no: this.data.out_trade_no
     }
-    else {
-        this.showToast({
-            title: result.message,
-            icon: 'none'
-        });
     }
+})
+
+wx.hideLoading()
+
+if (!result.code) {
+    const order = this.data.order
+    order.trade_state_desc = '正在退款'
+    order.status = 3
+    order.trade_state = 'REFUNDING'
+
+    this.setData({
+    order
+    })
+} else {
+    this.showToast({
+    title: result.message,
+    icon: 'none'
+    })
 }
+},
 ```
 
 云函数中，主要需要的参数是 `out_trade_no` 和  `total_fee`，然后分别作为退款的订单号和退款金额传给 `pay.refund` 方法进行退款申请即可。
@@ -339,58 +338,58 @@ async refund() {
 ```js
 // 申请退款
 case 'refund': {
-    const { out_trade_no } = data;
-    let orders = await orderCollection.where({ out_trade_no }).get();
+    const {out_trade_no} = data
+    const orders = await orderCollection.where({out_trade_no}).get()
+
+    console.log(orders)
 
     if (!orders.data.length) {
-        return {
-            code: 1,
-            message: '找不到订单'
-        }
+    return {
+        code: 1,
+        message: '找不到订单'
+    }
     }
 
-    let order = orders.data[0];
-    let {
-        total_fee,
-    } = order;
+    const order = orders.data[0]
+    const {
+    total_fee,
+    } = order
 
-    let result = await pay.refund({
-        out_trade_no,
-        total_fee,
-        out_refund_no: out_trade_no,
-        refund_fee: total_fee
-    });
+    const result = await pay.refund({
+    out_trade_no,
+    total_fee,
+    out_refund_no: out_trade_no,
+    refund_fee: total_fee
+    })
 
-    const { return_code } = result;
+    const {return_code} = result
 
     if (return_code === 'SUCCESS') {
-        try {
-            await orderCollection.where({ out_trade_no }).update({
-                data: {
-                    trade_state: 'REFUNDING',
-                    trade_state_desc: '正在退款',
-                    status: 3
-                }
-            });
+    try {
+        await orderCollection.where({out_trade_no}).update({
+        data: {
+            trade_state: 'REFUNDING',
+            trade_state_desc: '正在退款',
+            status: 3
         }
-        catch (e) {
-            return {
-                code: 1,
-                mesasge: e.message
-            }
+        })
+    } catch (e) {
+        return {
+        code: 1,
+        mesasge: e.message
         }
     }
-    else {
-        return {
-            code: 1,
-            mesasge: '退款失败，请重试'
-        }
+    } else {
+    return {
+        code: 1,
+        mesasge: '退款失败，请重试'
+    }
     }
 
     return {
-        code: 0,
-        data: {}
-    };
+    code: 0,
+    data: {}
+    }
 }
 ```
 
@@ -401,28 +400,28 @@ case 'refund': {
 ```js
 // 查询退款情况
 async queryRefund() {
-    const { result } = await wx.cloud.callFunction({
-        name: 'pay',
-        data: {
-            type: 'queryrefund',
-            data: {
-                out_trade_no: this.data.out_trade_no
-            }
-        }
-    });
-
-    // 退款成功，则更新本地数据状态
-    if (!result.code && result.data) {
-        let data = result.data;
-        let order = this.data.order;
-        order.trade_state_desc = data.trade_state_desc;
-        order.status = data.status;
-        order.trade_state = data.trade_state;
-
-        this.setData({
-            order: order
-        });
+const {result} = await wx.cloud.callFunction({
+    name: 'pay',
+    data: {
+    type: 'queryrefund',
+    data: {
+        out_trade_no: this.data.out_trade_no
     }
+    }
+})
+
+// 退款成功，则更新本地数据状态
+if (!result.code && result.data) {
+    const data = result.data
+    const order = this.data.order
+    order.trade_state_desc = data.trade_state_desc
+    order.status = data.status
+    order.trade_state = data.trade_state
+
+    this.setData({
+    order
+    })
+}
 },
 ```
 
@@ -431,48 +430,46 @@ async queryRefund() {
 ```js
 // 查询退款情况
 case 'queryrefund': {
-    
-    const { out_trade_no } = data;
+    const {out_trade_no} = data
 
-    let result = await pay.refundQuery({
-        out_trade_no
-    });
-    
-    const { refund_status_0, return_code  } = result;
+    const result = await pay.refundQuery({
+    out_trade_no
+    })
+
+    const {refund_status_0, return_code} = result
 
     if (return_code === 'SUCCESS' && refund_status_0 === 'SUCCESS') {
-        try {
-            await orderCollection.where({ out_trade_no }).update({
-                data: {
-                    trade_state: 'REFUNDED',
-                    trade_state_desc: '已退款',
-                    status: 4
-                }
-            });
+    try {
+        await orderCollection.where({out_trade_no}).update({
+        data: {
+            trade_state: 'REFUNDED',
+            trade_state_desc: '已退款',
+            status: 4
+        }
+        })
 
-            return {
-                code: 0,
-                data: {
-                    trade_state: 'REFUNDED',
-                    trade_state_desc: '已退款',
-                    status: 4
-                }
-            }
-        }
-        catch (e) {
-            return {
-                code: 0
-            };
-        }
-    }
-    else {
         return {
-            code: 0
-        };
+        code: 0,
+        data: {
+            trade_state: 'REFUNDED',
+            trade_state_desc: '已退款',
+            status: 4
+        }
+        }
+    } catch (e) {
+        return {
+        code: 0
+        }
     }
-
+    } else {
     return {
         code: 0
+    }
+    }
+
+    // eslint-disable-next-line no-unreachable
+    return {
+    code: 0
     }
 }
 ```

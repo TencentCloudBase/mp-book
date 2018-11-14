@@ -101,50 +101,49 @@ checkAuthSetting() {
         wx.getUserInfo({
           success: async (res) => {
             if (res.userInfo) {
-              let userInfo = res.userInfo;
+              const userInfo = res.userInfo
               // 将用户数据放在临时对象中，用于后续写入数据库
-              this.setUserTemp(userInfo);
+              this.setUserTemp(userInfo)
             }
 
+            const userInfo = this.data.userInfo || {}
+            userInfo.isLoaded = true
             this.setData({
-              userInfo: {
-                isLoaded: true,
-              },
+              userInfo,
               isAuthorized: true
-            });
+            })
           }
-        });
-      }
-      else {
+        })
+      } else {
         this.setData({
           userInfo: {
             isLoaded: true,
           }
-        });
+        })
       }
     }
-  });
+  })
 },
 
 // 设置临时数据，待 “真正登录” 时将用户数据写入 collection "users" 中
-  setUserTemp(userInfo = null, isAuthorized = true, cb = () => {}) {
-    this.setData({
-      userTemp: userInfo,
-      isAuthorized,
-    }, cb);
-  },
+setUserTemp(userInfo = null, isAuthorized = true, cb = () => {}) {
+  this.setData({
+    userTemp: userInfo,
+    isAuthorized,
+  }, cb)
+},
 
 // 手动获取用户数据
-bindGetUserInfoNew: async function(e) {
-  let userInfo = e.detail.userInfo;
+async bindGetUserInfoNew(e) {
+  const userInfo = e.detail.userInfo
   // 将用户数据放在临时对象中，用于后续写入数据库
-  this.setUserTemp(userInfo);
+  this.setUserTemp(userInfo)
 },
 ```
 
 ```html
 <button
-  wx:if="{{canIUseGetUserInfo && userInfo.isLoaded && !isAuthorized && !userInfo.nickName}}"
+  wx:if="{{userInfo.isLoaded && !isAuthorized && !userInfo.nickName}}"
   class="weui-btn"
   type="primary"
   open-type="getUserInfo"
@@ -162,112 +161,95 @@ bindGetUserInfoNew: async function(e) {
 
 ```js
 // 检测小程序的 session 是否有效
-checkUser: async function() {
-  // 查询数据库，看看有没有该用户的数据
-  const Users = this.db.collection('users');
-  let users = await Users.get();
+async checkUser() {
+  const Users = this.db.collection('users')
+  const users = await Users.get()
+  console.log(users)
 
   wx.checkSession({
     success: () => {
       // session_key 未过期，并且在本生命周期一直有效
       // 数据里有用户，则直接获取
       if (users.data.length && this.checkSession(users.data[0].expireTime || 0)) {
-        this.setUserInfo(users.data[0]);
-      }
-      else {
-        this.setUserInfo();
+        this.setUserInfo(users.data[0])
+      } else {
+        this.setUserInfo()
         // 强制更新并新增了用户
-        this.updateSession();
+        this.updateSession()
       }
     },
     fail: () => {
       // session_key 已经失效，需要重新执行登录流程
-      this.updateSession();
+      this.updateSession()
     }
-  });
+  })
 },
 
 // 更新 session_key
 updateSession() {
   wx.login({
     success: async (res) => {
-      console.log(res);
+      console.log(res)
       try {
-        let result = await wx.cloud.callFunction({
+        await wx.cloud.callFunction({
           name: 'user-session',
           data: {
             code: res.code
           }
-        });
-        console.log(result);
-      }
-      catch (e) {
-        console.log(e);
+        })
+      } catch (e) {
+        console.log(e)
       }
     }
-  });
+  })
 },
 ```
 
 以下是云函数 `user-session` 的源码，它的主要作为是，通过 `wXMINIUser.codeToSession` 方法获取最新 `session_key` 后，如果有数据，则只是更新 `session_key`，如果没数据则添加该用户并插入 `sesison_key`。此 `session_key` 与用户的数据关联，为后续进行数据解密打下了基础。
 
 ```js
-const cloud = require('wx-server-sdk');
-const {
-  appId,
-  secret
-} = require('./config');
-const {
-  WXMINIUser,
-} = require('wx-js-utils');
-
-cloud.init();
-
 // 云函数入口函数
-exports.main = async (event, context) => {
-  const db = cloud.database();
+exports.main = async (event) => {
+  console.log(event)
+  const db = cloud.database()
 
   const {
     OPENID,
     APPID
-  } = cloud.getWXContext();
+  } = cloud.getWXContext()
 
-  let wXMINIUser = new WXMINIUser({
-    appId,
+  const wXMINIUser = new WXMINIUser({
+    appId: APPID,
     secret
-  });
+  })
 
-  let code = event.code; // 从小程序端的 wx.login 接口传过来的 code 值
-  let info = await wXMINIUser.codeToSession(code);
+  const code = event.code // 从小程序端的 wx.login 接口传过来的 code 值
+  const info = await wXMINIUser.codeToSession(code)
 
   try {
     // 查询有没用户数据
-    let user = await db.collection('users').where({
+    const user = await db.collection('users').where({
       _openid: OPENID
-    }).get();
-    let result = null;
+    }).get()
 
     // 如果有数据，则只是更新 `session_key`，如果没数据则添加该用户并插入 `sesison_key`
     if (user.data.length) {
-      result = await db.collection('users').where({
+      await db.collection('users').where({
         _openid: OPENID
       }).update({
         data: {
           session_key: info.session_key
         }
-      });
-    }
-    else {
-      result = await db.collection('users').add({
+      })
+    } else {
+      await db.collection('users').add({
         data: {
           session_key: info.session_key,
           _openid: OPENID
         }
-      });
+      })
     }
-    
-  }
-  catch (e) {
+  } catch (e) {
     return {
       message: e.message,
       code: 1,
@@ -277,8 +259,8 @@ exports.main = async (event, context) => {
   return {
     message: 'login success',
     code: 0
-  };
-};
+  }
+}
 ```
 
 当我们在数据中存入了用户的一条空数据以及它相关的 `session_key` 后，我们可以引导用户通过小程序获取微信绑定的手机号，实现快速登陆。在模板文件中，我们添加了一个 `button` 组件，并将 `open-type` 设置为 `getPhoneNumber`。
@@ -299,38 +281,39 @@ exports.main = async (event, context) => {
 
 ```js
 // 获取用户手机号码
-bindGetPhoneNumber: async function(e) {
+async bindGetPhoneNumber(e) {
+  // console.log(e.detail);
   wx.showLoading({
     title: '正在获取',
-  });
+  })
 
   try {
-    let data = this.data.userTemp;
-    let result = await wx.cloud.callFunction({
-        name: 'user-login-register',
-        data: {
-          encryptedData: e.detail.encryptedData,
-          iv: e.detail.iv,
-          user: {
-            nickName: data.nickName,
-            avatarUrl: data.avatarUrl,
-            gender: data.gender
-          }
+    const data = this.data.userTemp
+    const result = await wx.cloud.callFunction({
+      name: 'user-login-register',
+      data: {
+        encryptedData: e.detail.encryptedData,
+        iv: e.detail.iv,
+        user: {
+          nickName: data.nickName,
+          avatarUrl: data.avatarUrl,
+          gender: data.gender
         }
-    });
+      }
+    })
+    console.log(result)
 
     if (!result.result.code && result.result.data) {
-      this.setUserInfo(result.result.data);
+      this.setUserInfo(result.result.data)
     }
 
-    wx.hideLoading();
-  }
-  catch (e) {
-    wx.hideLoading();
+    wx.hideLoading()
+  } catch (err) {
+    wx.hideLoading()
     wx.showToast({
       title: '获取手机号码失败，请重试',
       icon: 'none'
-    });
+    })
   }
 },
 ```
@@ -350,16 +333,24 @@ const duration = 24 * 3600 * 1000; // 开发侧控制登录态有效时间
 cloud.init();
 
 // 云函数入口函数
-exports.main = async (event, context) => {
+const cloud = require('wx-server-sdk')
+const WXBizDataCrypt = require('./WXBizDataCrypt')
+
+const duration = 24 * 3600 * 1000 // 开发侧控制登录态有效时间
+
+cloud.init()
+
+// 云函数入口函数
+exports.main = async (event) => {
   const {
     OPENID,
     APPID
-  } = cloud.getWXContext();
+  } = cloud.getWXContext()
 
-  const db = cloud.database();
-  let users = await db.collection('users').where({
+  const db = cloud.database()
+  const users = await db.collection('users').where({
     _openid: OPENID
-  }).get();
+  }).get()
 
   if (!users.data.length) {
     return {
@@ -369,15 +360,15 @@ exports.main = async (event, context) => {
   }
 
   // 进行数据解密
-  let user = users.data[0];
-  const wxBizDataCrypt = new WXBizDataCrypt(APPID, user.session_key);
-  let data = wxBizDataCrypt.decryptData(event.encryptedData, event.iv)
+  const user = users.data[0]
+  const wxBizDataCrypt = new WXBizDataCrypt(APPID, user.session_key)
+  const data = wxBizDataCrypt.decryptData(event.encryptedData, event.iv)
 
-  let expireTime = Date.now() + duration;
+  const expireTime = Date.now() + duration
 
   try {
     // 将用户数据和手机号码数据更新到该用户数据中
-    let result = await db.collection('users').where({
+    const result = await db.collection('users').where({
       _openid: OPENID
     }).update({
       data: {
@@ -385,23 +376,22 @@ exports.main = async (event, context) => {
         phoneNumber: data.phoneNumber,
         expireTime
       }
-    });
-    
+    })
+
     if (!result.stats.updated) {
       return {
         message: 'update failure',
         code: 1
       }
     }
-  }
-  catch (e) {
+  } catch (e) {
     return {
       message: e.message,
       code: 1
-    };
+    }
   }
 
-  
+
   return {
     message: 'success',
     code: 0,
@@ -409,7 +399,7 @@ exports.main = async (event, context) => {
       ...event.user,
       ...data
     },
-  };
+  }
 }
 ```
 
@@ -426,7 +416,7 @@ const duration = 24 * 3600 * 1000; // 开发侧控制登录态有效时间，此
 // ...... 此处省略其它代码
 
 // 将 expireTime 写入用户数据里
-let result = await db.collection('users').where({
+const result = await db.collection('users').where({
   _openid: OPENID
 }).update({
   data: {
@@ -434,7 +424,7 @@ let result = await db.collection('users').where({
     phoneNumber: data.phoneNumber,
     expireTime
   }
-});
+})
 
 ```
 
@@ -454,16 +444,16 @@ checkSession(expireTime = 0) {
 以下此方法，则是用户主动点击退出登陆按钮后，触发的方法，会将用户的 `expireTime` 设零过期。
 ```js
 // 退出登录
-bindLogout: async function() {
-  let userInfo = this.data.userInfo;
+async bindLogout() {
+  const userInfo = this.data.userInfo
 
-  let result = await this.db.collection('users').doc(userInfo._id).update({
+  await this.db.collection('users').doc(userInfo._id).update({
     data: {
       expireTime: 0
     }
-  });
-  
-  this.setUserInfo();
+  })
+
+  this.setUserInfo()
 }
 ```
 
