@@ -35,7 +35,7 @@
     <img style="background:white;padding:20px;" src="../assets/appid.png" width="800px">
 </p>
 
-5.在 `cloud/functions` 目录下，找到 `add-reserve` 云函数，修改其下的 `config/index.js` ，文件内容如下所示，将上面的信息分别填入对应字段，保存后上传并安装云函数依赖。
+5.在 `cloud/functions` 目录下，找到 `add-reserve` 云函数。在其根目录下新建 `config` 目录，复制 `example.js` 到 `config` 下，并改名为 `index.js` 。其内容如下所示，将上面收集保存的信息分别填入对应字段，然后上传并安装云函数依赖。
 
 ```js
 module.exports = {
@@ -48,7 +48,6 @@ module.exports = {
 然后依次上传并安装依赖下列云函数
 
 ```js
-cancel-reserve
 get-reserve
 send-template-message
 send-uniform-message
