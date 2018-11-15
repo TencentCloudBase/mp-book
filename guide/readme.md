@@ -42,17 +42,39 @@ const cloud = require('tcb-admin-node');
 // 云函数下不需要 secretId和secretKey，但如果在自己的服务器里使用则需要
 // env如果不指定将使用默认环境
 cloud.init({
-  secretId: 'xxxxx',
-  secretKey: 'xxxx',
-  env: 'xxx'
+  secretId: '',
+  secretKey: '',
 });
 
-async function getUserData() {
+// 获取所有数据的方法
+async function getData(colName) {
   const db = cloud.database();
-  return await db.collection('users').get(); // 默认获取20条数据
+  const userCollection = db.collection(colName);
+
+  // 统计数据总量
+  let res = await userCollection.count();
+  let total = res.total;
+
+  let data = [];
+  let length = 0;
+  let start = 0;
+  
+  // 循环将数据读出来
+  while (total > length) {
+    let res = await userCollection.skip(start).get();
+
+    // 读出来后将数据存到data里
+    data = data.concat(res.data);
+    length += res.data.length;
+    start += length;
+  }
+
+  return data;
 }
 
-getUserData(); // 调用方法
+getData('users').then((data) => {
+    console.log(data);
+}); // 调用方法
 ```
 
 ### 4. 云函数的创建和依赖安装。
@@ -84,8 +106,8 @@ exports.main = async (event, context) => {
 }
 ```
 
-### 6. 是否可以批量导入数据？
-可以的，请参考 [数据库导入](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/database/import.html)
+### 6. 是否可以批量导入导出数据？
+可以的，请参考 [数据库导入](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/database/import.html) 和 [数据库导出](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/database/export.html)
 
 ### 7. 数据库的在不同端的权限是怎么样的？
 小程序端的权限没有服务端那么高，请参 [权限控制](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/database/permission.html)
