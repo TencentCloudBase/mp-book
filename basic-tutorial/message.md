@@ -1,4 +1,4 @@
-# 模板消息和统一服务消息
+## 模板消息和统一服务消息
 
 本文对应实现例子为[mp-book-demo-basic](https://github.com/TencentCloudBase/mp-book-demo-basic)中的 `模板消息` 功能，类似一个访客预约系统，当用户预约成功后，下发一条消息。这个消息可以是单纯的小程序模板消息，如果小程序与公众号进行了关联，那么也可以使用统一服务消息，按需发送小程序的模板消息或是公众号的模板消息。
 
@@ -7,7 +7,7 @@
     <p align="center">扫码体验</p>
 </p>
 
-## 体验 DEMO
+### 体验 DEMO
 
 本章的案例代码，是在 [miniprogram-demo](https://github.com/TencentCloudBase/mp-book-demo-basic)。
 
@@ -35,31 +35,31 @@
     <img style="background:white;padding:20px;" src="../assets/appid.png" width="800px">
 </p>
 
-5.在 `cloud/functions` 目录下，找到 `add-reserve` 云函数。在其根目录下新建 `config` 目录，复制 `example.js` 到 `config` 下，并改名为 `index.js` 。其内容如下所示，将上面收集保存的信息分别填入对应字段，然后上传并安装云函数依赖。
+5.在 `cloud/functions` 目录下，找到 `send-message` 云函数。在其根目录下新建 `config` 目录，复制 `example.js` 到 `config` 下，并改名为 `index.js` 。其内容如下所示，将上面收集保存的信息分别填入对应字段
 
 ```js
 module.exports = {
-  SECRET: '', // 小程序 AppSecret id
-  TEMPLATE_ID: '', // 小程序模板消息 id
+  weappSecret: '', // 小程序 secret id
+  weappTemplateId: '', // 小程序模板消息 id
   mpAppId: '', // 公众号 appid
-  mpTemplateId: '' //公众号模板消息 id
-};
+  mpTemplateId: '' // 公众号模板消息 id
+}
+
 ```
-然后依次上传并安装依赖下列云函数
+然后上传并安装云函数依赖。
 
-```js
-get-reserve
-send-template-message
-send-uniform-message
-```
+6. 打开云控制台，选择 `数据库` -〉 `添加集合`，新建一个名为 `reserves` 的集合。
 
-# 模板消息
+做完以上步骤，编译预览就可以体验本demo了。
 
-## 1. 自定义消息模板
+
+## 模板消息
+
+### 1. 自定义消息模板
 发送模板消息，首先需要在模板库里选择对应的模板，并按需选择所需字段。如果模板库中已有模板不能满足业务需求，可以自己定义后提交审核，审核通过后即可选择使用。
 微信公众平台模板消息选择界面
 
-## 2. 使用wx-js-utils发送模板消息
+### 2. 使用wx-js-utils发送模板消息
 
 官方的发送模板消息API如下
 ```js
@@ -82,7 +82,7 @@ POST https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token
 ```
 我们只需要关注我们发布的消息内容即可。
 
-# 统一服务消息
+## 统一服务消息
 
 统一服务消息这个就比较厉害了！
 
@@ -90,12 +90,12 @@ POST https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token
 
 用统一服务消息API发送小程序模板消息，具体的参数就是上面模板消息例子中的那些，只不过格式有点变化，这里就不多说，主要说下公众号的。
 
-## 1. 选择模板
+### 1. 选择模板
 
 同样的，发送公众号模板消息也需要在公众号管理平台先选择。具体如何选择前文已有介绍，这里就不再说。
 
 
-## 2. 官网接口
+### 2. 官网接口
 官方的发送统一服务消息API如下
 ```js
 POST https://api.weixin.qq.com/cgi-bin/message/wxopen/template/uniform_send?access_token=ACCESS_TOKEN
@@ -108,7 +108,7 @@ POST https://api.weixin.qq.com/cgi-bin/message/wxopen/template/uniform_send?acce
 ```
 网上有博客说把pagepath改成path可以发送成功，但这样一来，收到消息后没有地址回到小程序了，也是没有意义的。
 
-## 3. 使用 wx-js-utils 接口发送统一服务消息
+### 3. 使用 wx-js-utils 接口发送统一服务消息
 主要代码如下：
 ```js
   const {
