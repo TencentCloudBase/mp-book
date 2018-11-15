@@ -11,7 +11,7 @@
 
 本章的案例代码，是在 [miniprogram-demo](https://github.com/TencentCloudBase/mp-book-demo-basic)。
 
-1.在config/index.js中补齐如下字段内容
+1.新建 `config` 目录，复制 `example.js` 到 `config` 下，并改名为 `index.js`，打开并补齐如下字段内容
 ```js
 module.exports = {
   appId: '', // 微信小程序 AppID
@@ -19,19 +19,19 @@ module.exports = {
   bucketPrefix: '' // 云存储地址前缀，形如cloud://tcb-demo-u8s8ec.7463-tcb-demo-u8s8ec/
 };
 ```
-其中 bucketPrefix 为文件存储fildID的前半部分。比如下面这个文件：
+其中 `bucketPrefix` 为文件存储 `fildID` 的前半部分。比如下面这个文件：
 
 <p align="center">
     <img style="width:650px;" src="../assets/qr-bucketprefix.png">
 </p>
 
-其 fileID 为：`cloud://tcb-demo-u8s8ec.8888-tcb-demo-u8s8ec/qr/square.png`，则 bucketPrefix 为 `cloud://tcb-demo-u8s8ec.8888-tcb-demo-u8s8ec/`
+其 `fileID` 为：`cloud://tcb-demo-u8s8ec.8888-tcb-demo-u8s8ec/qr/square.png`，则 `bucketPrefix` 为 `cloud://tcb-demo-u8s8ec.8888-tcb-demo-u8s8ec/`
 
 2.到控制台文件存储中顶级目录中创建一个名为 `qr` 的目录
 
 3.上传云函数到服务器并部署服务
 
-至此，服务就可以跑起来了。编译后，在列表中选择`小程序码生成`进入页面。
+至此，服务就可以跑起来了。编译后，在列表中选择 `小程序码生成` 进入页面。
 
 ## 2.二维码API
 
