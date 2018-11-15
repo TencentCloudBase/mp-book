@@ -23,7 +23,7 @@
 小程序端的 API 文档，可在 [小程序端 API 文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-client-api/) 查看。
 服务端的 API 文档，可在 [云开发 Server API 文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-server-api/) 查看。
 
-### 3. 在自己的服务器里（不是云开发）调用云开发的服务，要做哪些额外配置。
+### 3. 在自己的服务器或者电脑本地的Node运行环境里（不是云开发）调用云开发的服务，要做哪些额外配置。
 
 需要填入腾讯云的 `SecretId` 和 `SecretKey`。通过此[链接](https://www.qcloud.com/login/mp?s_url=https%3A%2F%2Fconsole.cloud.tencent.com%2Fcam%2Fcapi)登录小程序对应的腾讯云帐号，然后在[云API密钥](https://console.cloud.tencent.com/cam/capi) 里获取。
 
@@ -36,16 +36,23 @@
 
 ```js
 // 初始化示例
-const tcb = require('tcb-admin-node');
+const cloud = require('tcb-admin-node');
 
 // 初始化资源
 // 云函数下不需要 secretId和secretKey，但如果在自己的服务器里使用则需要
 // env如果不指定将使用默认环境
-tcb.init({
+cloud.init({
   secretId: 'xxxxx',
   secretKey: 'xxxx',
   env: 'xxx'
 });
+
+async function getUserData() {
+  const db = cloud.database();
+  return await db.collection('users').get(); // 默认获取20条数据
+}
+
+getUserData(); // 调用方法
 ```
 
 ### 4. 云函数的创建和依赖安装。
