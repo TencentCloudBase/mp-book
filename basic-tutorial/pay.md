@@ -260,7 +260,7 @@ case 'payorder': {
             formId: prepay_id,
             openId: OPENID,
             appId: APPID,
-            page: `/pages/pay-result/index?id=${out_trade_no}`,
+            page: `pages/pay-result/index?id=${out_trade_no}`, // pages 前面不允许带有 "/"，否则识别为非法参数
             data: {
             keyword1: {
                 value: out_trade_no // 订单号
