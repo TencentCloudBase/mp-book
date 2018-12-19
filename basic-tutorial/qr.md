@@ -3,7 +3,7 @@
 本文对应实现例子为[tcb-demo-basic](https://github.com/TencentCloudBase/tcb-demo-basic)中的 `小程序码` 功能，可以生成包括小程序码、小程序二维码。
 
 <p align="center">
-    <img src="../assets/cloudbase-qr.png" width="500px">
+    <img src="https://main.qcloudimg.com/raw/c0864edd1ef2a87c2e6768a1fd04846c.png" width="500px">
     <p align="center">扫码体验</p>
 </p>
 

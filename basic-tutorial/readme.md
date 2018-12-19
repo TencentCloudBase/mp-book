@@ -8,6 +8,6 @@
 - [微信支付](pay.md)
 
 <p align="center">
-    <img src="../assets/cloudbase-qr.png" width="500px">
+    <img src="https://main.qcloudimg.com/raw/c0864edd1ef2a87c2e6768a1fd04846c.png" width="500px">
     <p align="center">扫码体验</p>
 </p>

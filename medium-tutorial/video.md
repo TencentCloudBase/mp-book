@@ -2,6 +2,11 @@
 
 本文对应实现例子为[tcb-demo-video](https://github.com/TencentCloudBase/tcb-demo-video)。本解决方案，视频能力是借助了腾讯云的[实时音视频](https://cloud.tencent.com/product/trtc)功能，而配置的拉取、房间的管理主要是借助了云开发的云函数和数据库能力。
 
+<p align="center">
+    <img src="https://main.qcloudimg.com/raw/5dffe79d2f0b28f7212c17c6a77be62e.png" width="500px">
+    <p align="center">扫码体验</p>
+</p>
+
 ## 体验 DEMO
 
 本章的案例代码，是在 [tcb-demo-video](https://github.com/TencentCloudBase/tcb-demo-video)。
