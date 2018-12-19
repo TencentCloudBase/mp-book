@@ -9,11 +9,13 @@
     - [小程序码生成](basic-tutorial/qr.md)
     - [模板消息和统一服务消息](basic-tutorial/message.md)
     - [微信支付](basic-tutorial/pay.md)
+* [小程序中级场景及开发教学](medium-tutorial/readme.md)
+    - [音视频接入](medium-tutorial/video.md)
 
 
 未完待续...
 
-
 ## 作者
 - [heyli](https://github.com/lcxfs1991)
 - [kennyang](https://github.com/mushanpu)
+- [anderlu](https://github.com/anderlu)

@@ -1,6 +1,6 @@
 # 用户管理
 
-本文对应实现例子为[mp-book-demo-basic](https://github.com/TencentCloudBase/mp-book-demo-basic)中的 `用户管理` 功能，可以通过该例子体验用户注册、登录、退出登录功能。
+本文对应实现例子为[tcb-demo-basic](https://github.com/TencentCloudBase/tcb-demo-basic)中的 `用户管理` 功能，可以通过该例子体验用户注册、登录、退出登录功能。
 
 <p align="center">
     <img src="../assets/cloudbase-qr.png" width="500px">
@@ -17,7 +17,7 @@
 
 ## 体验 DEMO
 
-本章的案例代码，是在 [miniprogram-demo](https://github.com/TencentCloudBase/mp-book-demo-basic)。
+本章的案例代码，是在 [tcb-demo-basic](https://github.com/TencentCloudBase/tcb-demo-basic)。
 
 将代码下载下来之后，遵循以下步骤可以在微信开发者工具里体验：
 

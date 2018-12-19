@@ -1,15 +1,15 @@
-## 模板消息和统一服务消息
+# 模板消息和统一服务消息
 
-本文对应实现例子为[mp-book-demo-basic](https://github.com/TencentCloudBase/mp-book-demo-basic)中的 `模板消息` 功能，类似一个访客预约系统，当用户预约成功后，下发一条消息。这个消息可以是单纯的小程序模板消息，如果小程序与公众号进行了关联，那么也可以使用统一服务消息，按需发送小程序的模板消息或是公众号的模板消息。
+本文对应实现例子为[tcb-demo-basic](https://github.com/TencentCloudBase/tcb-demo-basic)中的 `模板消息` 功能，类似一个访客预约系统，当用户预约成功后，下发一条消息。这个消息可以是单纯的小程序模板消息，如果小程序与公众号进行了关联，那么也可以使用统一服务消息，按需发送小程序的模板消息或是公众号的模板消息。
 
 <p align="center">
     <img src="../assets/cloudbase-qr.png" width="500px">
     <p align="center">扫码体验</p>
 </p>
 
-### 体验 DEMO
+## 体验 DEMO
 
-本章的案例代码，是在 [miniprogram-demo](https://github.com/TencentCloudBase/mp-book-demo-basic)。
+本章的案例代码，是在 [tcb-demo-basic](https://github.com/TencentCloudBase/tcb-demo-basic)。
 
 1.用小程序登录微信公众平台，选择 `访客登记通知` 消息模板。添加到个人模板库，复制保存后的模板ID，供后面使用。
 
