@@ -32,7 +32,7 @@
     <p align="center">配置相关域名</p>
 </p>
 
-4. 到腾讯云的[实时音视频](https://cloud.tencent.com/product/trtc)，开通服务并购买体验包，进入控制台，并获取以下配置信息：
+4. 到腾讯云的[实时音视频](https://cloud.tencent.com/product/trtc)，开通服务并购买体验包，进入控制台，并获取以下配置信息：
 
 (1) SDKAppid 和 accoutType
 
@@ -57,9 +57,9 @@
 
 ### WebRTC能力
 
-WebRTC 的能力的体验，主要是围绕源码中 `client/pages/webrtc-room` 里面的 `join-room` 和 `room` 两个目录，一个是手动输入房间号进入房间，另一个是视频房间，还涉及到的是 `cloud/functions/webrtc-sig-api` 目录，此云函数主要用于填写实时音视频的配置后，进行加密，将加密好的信息传到小程序端，才能正常使用 WebRTC 视频通话能力。
+WebRTC 的能力的体验，主要是围绕源码中 `client/pages/webrtc-room` 里面的 `join-room` 和 `room` 两个目录，一个是手动输入房间号进入房间，另一个是视频房间，还涉及到的是 `cloud/functions/webrtc-sig-api` 目录，此云函数主要用于填写实时音视频的配置后，进行加密，将加密好的信息传到小程序端，才能正常使用 WebRTC 视频通话能力。
 
-云函数 `webrtc-sig-api` 中，`WebRTCSigApi.js` 是官方提供的[签名逻辑文件](https://github.com/TencentVideoCloudMLVBDev/usersig_server_source/blob/master/nodejs/WebRTCSigApi.js)，而 `index.js`，不外乎是调用 `WebRTCSigApi.js` 中的方法，然后将 `privateMapKey`, `userSig` 提供到小程序，有了这两个信息，小程序端才能正常将直播流唤起。
+云函数 `webrtc-sig-api` 中，`WebRTCSigApi.js` 是官方提供的[签名逻辑文件](https://github.com/TencentVideoCloudMLVBDev/usersig_server_source/blob/master/nodejs/WebRTCSigApi.js)，而 `index.js`，不外乎是调用 `WebRTCSigApi.js` 中的方法，然后将 `privateMapKey`, `userSig` 提供到小程序，有了这两个信息，小程序端才能正常将直播流唤起。
 
 ### 房间管理
 
@@ -70,7 +70,7 @@ WebRTC 的能力的体验，主要是围绕源码中 `client/pages/webrtc-room` 
     <p align="center">房间数据格式</p>
 </p>
 
-数据包括有房间创建者和观众的 `openid`，房间 id 和房间名、房间创建时间，还有房间的权限位 `privateMapKey`。
+数据包括有房间创建者和观众的 `openid`，房间 id 和房间名、房间创建时间，还有房间的权限位 `privateMapKey`。
 
 云函数分别有创建房间(webrtc-create-room)、进入房间(webrtc-enter-room)、退出房间(webrtc-quit-room)、获取房间信息(webrtc-get-room-info)、获取房间列表(webrtc-get-room-list)5个云函数。
 
@@ -78,7 +78,7 @@ WebRTC 的能力的体验，主要是围绕源码中 `client/pages/webrtc-room` 
 
 `webrtc-enter-room` 函数主要用于进入房间，如果房间存在，则将用户的 `openid` 写入房间观众字段，如果房间不存在，则调用 `webrtc-create-room` 进行房间创建。
 
-`webrtc-quit-room` 函数主要用于退出房间，如果房间还有观众，则将退出者的 `openid` 清楚，如果没有观众了，则把房间数据清理掉。
+`webrtc-quit-room` 函数主要用于退出房间，如果房间还有观众，则将退出者的 `openid` 清楚，如果没有观众了，则把房间数据清理掉。
 
 `webrtc-get-room-info` 函数主要用于获取房间数据。
 
