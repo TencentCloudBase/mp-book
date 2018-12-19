@@ -79,13 +79,13 @@ WebRTC 的能力的体验，主要是围绕源码中 `client/pages/webrtc-room` 
 
 云函数分别有创建房间(webrtc-create-room)、进入房间(webrtc-enter-room)、退出房间(webrtc-quit-room)、获取房间信息(webrtc-get-room-info)、获取房间列表(webrtc-get-room-list)5个云函数。
 
-`webrtc-create-room` 函数主要用于创建房间，这里用到了数据库的读写，先要判断房间是否存在，如果不存在，则创建。
+* `webrtc-create-room` 函数主要用于创建房间，这里用到了数据库的读写，先要判断房间是否存在，如果不存在，则创建。
 
-`webrtc-enter-room` 函数主要用于进入房间，如果房间存在，则将用户的 `openid` 写入房间观众字段，如果房间不存在，则调用 `webrtc-create-room` 进行房间创建。
+* `webrtc-enter-room` 函数主要用于进入房间，如果房间存在，则将用户的 `openid` 写入房间观众字段，如果房间不存在，则调用 `webrtc-create-room` 进行房间创建。
 
-`webrtc-quit-room` 函数主要用于退出房间，如果房间还有观众，则将退出者的 `openid` 清楚，如果没有观众了，则把房间数据清理掉。
+* `webrtc-quit-room` 函数主要用于退出房间，如果房间还有观众，则将退出者的 `openid` 清楚，如果没有观众了，则把房间数据清理掉。
 
-`webrtc-get-room-info` 函数主要用于获取房间数据。
+* `webrtc-get-room-info` 函数主要用于获取房间数据。
 
-`webrtc-get-room-list` 函数主要用于获取房间列表数据。
+* `webrtc-get-room-list` 函数主要用于获取房间列表数据。
 
