@@ -57,6 +57,11 @@
 
 6. 如果需要体验房间列表功能，则需要把其余的云函数也一并上传部署，并且云开发数据库中，创建 `webrtcRooms` 集合。
 
+<p align="center">
+    <img src="https://main.qcloudimg.com/raw/ad9a36f9dafde5721acf1b22499417cf.png" width="800px">
+    <p align="center">创建 webrtcRooms 集合</p>
+</p>
+
 
 ## 音视频
 
@@ -80,6 +85,15 @@ WebRTC 的能力的体验，主要是围绕源码中 `client/pages/webrtc-room` 
 云函数分别有创建房间(webrtc-create-room)、进入房间(webrtc-enter-room)、退出房间(webrtc-quit-room)、获取房间信息(webrtc-get-room-info)、获取房间列表(webrtc-get-room-list)5个云函数。
 
 * `webrtc-create-room` 函数主要用于创建房间，这里用到了数据库的读写，先要判断房间是否存在，如果不存在，则创建。
+
+该函数有一处逻辑值得解读下，此处是通过循环的方式，去检查房间 id ，以防生成了重复的 id。
+
+```js
+// 循环检查数据，避免 generateRoomID 生成重复的roomID
+while (await isRoomExist(roomInfo.roomID)) {
+    roomInfo.roomID = generateRoomID()
+}
+```
 
 * `webrtc-enter-room` 函数主要用于进入房间，如果房间存在，则将用户的 `openid` 写入房间观众字段，如果房间不存在，则调用 `webrtc-create-room` 进行房间创建。
 
