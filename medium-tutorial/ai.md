@@ -25,7 +25,7 @@
 |图片鉴黄|pornDetect|pornDetect|
 |图片标签|tagDetect|tagDetect|
 
-如果需要体验某个功能，需要在对应的云函数里参照 `config/example.js` 新建 `config/index.js`，并填入上面拿到的`SecretId` 和 `SecretKey`，然后创建并部署云函数。
+如果需要体验某个功能，需要在对应的云函数里参照 `config/example.js` 新建 `config/index.js`，并填入上面拿到的`SecretId` 和 `SecretKey`，然后创建并部署云函数。
 
 ## AI 智能图像服务
 
@@ -70,7 +70,7 @@ const result = await imgClient.faceIdCardLiveDetectFour({
     <p align="center">视频遮罩</p>
 </p>
 
-那在小程序端怎么可以让图片等元素，盖在 `<camera>`, `<video>` 等原生的组件上面呢？答案是使用 `<cover-view>` 和 `<cover-image>`，譬如：
+那在小程序端怎么可以让图片等元素，盖在 `<camera>`, `<video>` 等原生的组件上面呢？答案是使用 `<cover-view>` 和 `<cover-image>`，譬如：
 
 ```html
 <camera
