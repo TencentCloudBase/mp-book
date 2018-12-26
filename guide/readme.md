@@ -25,7 +25,7 @@
 
 ### 3. 在自己的服务器或者电脑本地的Node运行环境里（不是云开发）调用云开发的服务，要做哪些额外配置。
 
-需要填入腾讯云的 `SecretId` 和 `SecretKey`。通过此[链接](https://www.qcloud.com/login/mp?s_url=https%3A%2F%2Fconsole.cloud.tencent.com%2Fcam%2Fcapi)登录小程序对应的腾讯云帐号，然后在[云API密钥](https://console.cloud.tencent.com/cam/capi) 里获取。
+需要填入腾讯云的 `SecretId` 和 `SecretKey`。通过此[链接](https://www.qcloud.com/login/mp?s_url=https%3A%2F%2Fconsole.cloud.tencent.com%2Fcam%2Fcapi)登录小程序对应的腾讯云帐号(需要小程序管理员权限)，然后在[云API密钥](https://console.cloud.tencent.com/cam/capi) 里获取。
 
 <p align="center">
     <img src="../assets/guide1.png" width="800px">
