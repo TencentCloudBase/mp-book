@@ -54,7 +54,7 @@
     <p align="center">private_key 文件</p>
 </p>
 
-5. 用文本编辑器打开 DEMO 源码根目录下的 project.config.json 文件，填写小程序的 appid。
+5. 用文本编辑器打开 DEMO 源码根目录下的 project.config.json 文件，填写您的小程序 appid。
 
 6. 请使用微信开发者工具打开 DEMO 源码，需要在云函数 `webrtc-sig-api` 中，将 `private_key` 文件放到 `config` 目录下，并在`config`目录下，参照`example.js`文件，新建 `index.js` 文件，配置好SDKAppid 和 accoutType，然后上传部署所有的云函数。在云开发面板的数据库栏目中，创建 `webrtcRooms` 集合。
 
