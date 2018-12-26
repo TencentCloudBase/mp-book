@@ -10,7 +10,8 @@
     - [模板消息和统一服务消息](basic-tutorial/message.md)
     - [微信支付](basic-tutorial/pay.md)
 * [小程序中级场景及开发教学](medium-tutorial/readme.md)
-    - [音视频接入](medium-tutorial/video.md)
+    - [音视频服务](medium-tutorial/video.md)
+    - [AI智能图像服务](medium-tutorial/ai.md)
 
 
 未完待续...

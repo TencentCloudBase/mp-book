@@ -2,5 +2,5 @@
 
 本章，会介绍如何云开发的中级能力：
 
-- [音视频](video.md)
-- [AI智能图像服务](ai.md)
+- [音视频服务](medium-tutorial/video.md)
+- [AI智能图像服务](medium-tutorial/ai.md)

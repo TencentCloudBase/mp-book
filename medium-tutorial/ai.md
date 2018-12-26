@@ -27,5 +27,69 @@
 
 如果需要体验某个功能，需要在对应的云函数里参照 `config/example.js` 新建 `config/index.js`，并填入上面拿到的`SecretId` 和 `SecretKey`，然后创建并部署云函数。
 
+## AI 智能图像服务
 
+### 活体检测—获取唇语验证
 
+本案例实现了该服务的一些基础能力。整个逻辑流程如下：
+
+<p align="center">
+    <img src="https://main.qcloudimg.com/raw/440d2b156cff9803833e4423d1e96373.png" width="400px">
+    <p align="center">实现逻辑</p>
+</p>
+
+其中云函数 `idCardLiveDetectFour` 的大体逻辑如下：
+
+```js
+// 首先把视频下载下来，获得视频内容的字符串内容
+let res = await cloud.downloadFile({
+    fileID: video
+})
+
+const buffer = res.fileContent
+
+// 以 form-data 的格式，传到人脸核身服务进行校验
+let formData = {
+    validate_data: number,
+    video: buffer,
+    idcard_number: idcard,
+    idcard_name: name
+}
+
+const result = await imgClient.faceIdCardLiveDetectFour({
+    headers: {
+        "content-type": "multipart/form-data"
+    },
+    formData,
+});
+```
+
+在小程序端，需要有类似的遮罩，才能提供视频通过的概率。
+<p align="center">
+    <img src="https://main.qcloudimg.com/raw/c4991650a6adc8b21ffe619a5756788d.png" width="400px">
+    <p align="center">视频遮罩</p>
+</p>
+
+那在小程序端怎么可以让图片等元素，盖在 `<camera>`, `<video>` 等原生的组件上面呢？答案是使用 `<cover-view>` 和 `<cover-image>`，譬如：
+
+```html
+<camera
+    device-position="front"
+    flash="off"
+    binderror="error"
+>
+    <cover-view class="camera-cover">
+        <cover-image 
+            class="camera-image"    
+            src="image path"
+        >
+        </cover-image>
+    </cover-view>
+    <cover-view
+      class="number"
+      wx-if="{{isRecording}}"
+    >
+        请念数字：{{number}}
+  </cover-view>
+</camera>
+```
