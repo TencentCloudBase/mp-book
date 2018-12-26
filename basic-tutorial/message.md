@@ -3,7 +3,7 @@
 本文对应实现例子为[tcb-demo-basic](https://github.com/TencentCloudBase/tcb-demo-basic)中的 `模板消息` 功能，类似一个访客预约系统，当用户预约成功后，下发一条消息。这个消息可以是单纯的小程序模板消息，如果小程序与公众号进行了关联，那么也可以使用统一服务消息，按需发送小程序的模板消息或是公众号的模板消息。
 
 <p align="center">
-    <img src="https://main.qcloudimg.com/raw/c0864edd1ef2a87c2e6768a1fd04846c.png" width="500px">
+    <img src="https://main.qcloudimg.com/raw/f36ab01f3fd9e0f899c879f71d11fdff.png" width="500px">
     <p align="center">扫码体验</p>
 </p>
 

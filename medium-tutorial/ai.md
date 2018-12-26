@@ -1,0 +1,31 @@
+# AI 智能图象服务
+
+本文对应实现例子为[tcb-demo-ai](https://github.com/TencentCloudBase/tcb-demo-ai)。本解决方案，视频能力是借助了腾讯云的[智能鉴黄](https://cloud.tencent.com/product/pornidentification)、[图片标签](https://cloud.tencent.com/product/image-tag)、[文字识别 OCR](https://cloud.tencent.com/product/ocr)、[人脸识别](https://cloud.tencent.com/product/facerecognition)、[人脸核身](https://cloud.tencent.com/product/facein)和[人脸融合](https://cloud.tencent.com/product/facefusion)功能，而配置的拉取。功能通过在云开发的云函数中调用 [image-node-sdk](https://github.com/TencentCloudBase/image-node-sdk) 来实现。
+
+## 体验 DEMO
+
+本章的案例代码，是在 [tcb-demo-ai](https://github.com/TencentCloudBase/tcb-demo-ai)。
+
+1. 通过此[链接](https://www.qcloud.com/login/mp?s_url=https%3A%2F%2Fconsole.cloud.tencent.com%2Fcam%2Fcapi)登录小程序对应的腾讯云帐号(需要小程序管理员权限)，然后在[云API密钥](https://console.cloud.tencent.com/cam/capi) 里获取 `SecretId` 和 `SecretKey`。
+
+2. 本案例，前端页面(client/pages/)和云函数(cloud/functions)一一对应，如下：
+
+|功能|前端页面|云函数|
+|--|--|--|
+|银行卡识别|bankCard|bankCard|
+|名片识别（V2)|bizCard|bizCard|
+|营业执照识别|bizLicense|bizLicense|
+|行驶证驾驶证识别|drivingLicence|drivingLicence|
+|人脸融合|faceFuse|faceFuse|
+|通用印刷体识别|general|general|
+|手写体识别|handWriting|handWriting|
+|活体检测—获取唇语验证|idCardLiveDetectFour|idCardLiveDetectFour & faceLiveGetFour|
+|身份证识别|idCard|idCard|
+|车牌号识别|plate|plate|
+|图片鉴黄|pornDetect|pornDetect|
+|图片标签|tagDetect|tagDetect|
+
+如果需要体验某个功能，需要在对应的云函数里参照 `config/example.js` 新建 `config/index.js`，并填入上面拿到的`SecretId` 和 `SecretKey`，然后创建并部署云函数。
+
+
+
