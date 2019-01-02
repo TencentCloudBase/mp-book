@@ -50,6 +50,16 @@
 * `project_id` (活动 ID)，可在[人脸融合控制台](https://console.cloud.tencent.com/ai/facemerge/index)中查看
 * `model_id` (素材 ID)，可在[人脸融合控制台](https://console.cloud.tencent.com/ai/facemerge/index)中查看
 
+<p align="center">
+    <img src="https://main.qcloudimg.com/raw/a33308635e45b70fb2980b24a2df46c0.png" width="800px">
+    <p align="center">人脸融合--活动管理面板</p>
+</p>
+
+<p align="center">
+    <img src="https://main.qcloudimg.com/raw/178279776674941eff34681b5ac7aee9.png" width="800px">
+    <p align="center">人脸融合--活动素材管理面板</p>
+</p>
+
 ## 解决方案源码介绍
 
 ### 活体检测—获取唇语验证
