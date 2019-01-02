@@ -44,7 +44,7 @@
 5. 如果是体验以下的功能，还需要做额外的准备工作：
 
 ### 人脸融合
-如果想体验人脸融合，开通服务后，需要【创建活动】并【添加素材】，要获得以下配置：
+如果想体验人脸融合，开通服务后，需要【创建活动】并【添加素材】，要获得以下配置：
 
 * `uin`（账号 ID），可在[账号信息](https://console.cloud.tencent.com/developer)中查看
 * `project_id` (活动 ID)，可在[人脸融合控制台](https://console.cloud.tencent.com/ai/facemerge/index)中查看
