@@ -15,7 +15,14 @@
 
 2. 通过此[链接](https://www.qcloud.com/login/mp?s_url=https%3A%2F%2Fconsole.cloud.tencent.com%2Fcam%2Fcapi)登录小程序对应的腾讯云帐号(需要小程序管理员权限)，然后在[云API密钥](https://console.cloud.tencent.com/cam/capi) 里获取 `SecretId` 和 `SecretKey`。
 
-3. 本案例，前端页面(client/pages/)和云函数(cloud/functions)一一对应，如下：
+3. 在腾讯云的[智能图像控制台](https://console.cloud.tencent.com/ai)，开通相应的服务：
+
+<p align="center">
+    <img src="https://main.qcloudimg.com/raw/d4d30dff15fdb69f30f18c450b7274f6.png" width="1000px">
+    <p align="center">开通服务</p>
+</p>
+
+4. 本案例，前端页面(client/pages/)和云函数(cloud/functions)一一对应，如下：
 
 |功能|前端页面|云函数|
 |--|--|--|
@@ -34,6 +41,15 @@
 
 如果需要体验某个功能，需要在对应的云函数里参照 `config/example.js` 新建 `config/index.js`，并填入上面拿到的`SecretId` 和 `SecretKey`，然后创建并部署云函数。
 
+5. 如果是体验以下的功能，还需要做额外的准备工作：
+
+### 人脸融合
+如果想体验人脸融合，开通服务后，需要【创建活动】并【添加素材】，要获得以下配置：
+
+* `uin`（账号 ID），可在[账号信息](https://console.cloud.tencent.com/developer)中查看
+* `project_id` (活动 ID)，可在[人脸融合控制台](https://console.cloud.tencent.com/ai/facemerge/index)中查看
+* `model_id` (素材 ID)，可在[人脸融合控制台](https://console.cloud.tencent.com/ai/facemerge/index)中查看
+
 ## 解决方案源码介绍
 
 ### 活体检测—获取唇语验证
@@ -41,7 +57,7 @@
 本案例实现了该服务的一些基础能力。整个逻辑流程如下：
 
 <p align="center">
-    <img src="https://main.qcloudimg.com/raw/440d2b156cff9803833e4423d1e96373.png" width="400px">
+    <img src="https://main.qcloudimg.com/raw/440d2b156cff9803833e4423d1e96373.png" width="600px">
     <p align="center">实现逻辑</p>
 </p>
 
