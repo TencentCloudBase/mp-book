@@ -1,17 +1,22 @@
 # 音视频解决方案
 
-本文对应实现例子为[tcb-demo-video](https://github.com/TencentCloudBase/tcb-demo-video)。本解决方案，视频能力是借助了腾讯云的[实时音视频](https://cloud.tencent.com/product/trtc)功能，而配置的拉取、房间的管理主要是借助了云开发的云函数和数据库能力。
+## 功能概述
+
+本文对应实现例子为[tcb-demo-video](https://github.com/TencentCloudBase/tcb-demo-video)。本解决方案，整合了腾讯云的[实时音视频](https://cloud.tencent.com/product/trtc)能力，通过云开发的云函数和数据库的能力，简化了配置的拉取和房间的管理。
+
+## 体验解决方案
 
 <p align="center">
     <img src="https://main.qcloudimg.com/raw/5dffe79d2f0b28f7212c17c6a77be62e.png" width="500px">
     <p align="center">扫码体验</p>
 </p>
 
-## DEMO 代码
+## 解决方案 DEMO 源码
 
 本章的案例代码在 [tcb-demo-video](https://github.com/TencentCloudBase/tcb-demo-video)。包含了小程序前端代码 （`client` 目录下）和云函数代码（`cloud` 目录下），需要在微信开发者工具中打开整个项目。下面将详细介绍 DEMO 的接入流程。
 
-## DEMO 接入流程
+## 解决方案 DEMO 接入流程
+
 1. 在小程序的管理后台 【设置】-> 【基本设置】 -> 【服务类目】中添加允许视频直播类的管理。
 
 <p align="center">
@@ -54,9 +59,9 @@
     <p align="center">private_key 文件</p>
 </p>
 
-5. 用文本编辑器打开 DEMO 源码根目录下的 project.config.json 文件，填写您的小程序 appid。
+5. 请使用微信开发者工具打开 DEMO 源码，在根目录下的 project.config.json 文件，填写您的小程序 appid。
 
-6. 请使用微信开发者工具打开 DEMO 源码，需要在云函数 `webrtc-sig-api` 中，将 `private_key` 文件放到 `config` 目录下，并在`config`目录下，参照`example.js`文件，新建 `index.js` 文件，配置好SDKAppid 和 accoutType，然后上传部署所有的云函数。在云开发面板的数据库栏目中，创建 `webrtcRooms` 集合。
+6. 需要在云函数目录 `cloud/functions` 的函数 `webrtc-sig-api` 中，将 `private_key` 文件放到 `config` 目录下，并在`config`目录下，参照`example.js`文件，新建 `index.js` 文件，配置好SDKAppid 和 accoutType，然后上传部署所有的云函数。在云开发面板的数据库栏目中，创建 `webrtcRooms` 集合。
 
 <p align="center">
     <img src="https://main.qcloudimg.com/raw/ad9a36f9dafde5721acf1b22499417cf.png" width="800px">
@@ -65,7 +70,7 @@
 
 7. 预览小程序即可。
 
-## 音视频
+## 解决方案源码介绍
 
 ### WebRTC能力
 
