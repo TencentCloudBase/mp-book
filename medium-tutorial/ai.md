@@ -57,7 +57,7 @@
 本案例实现了该服务的一些基础能力。整个逻辑流程如下：
 
 <p align="center">
-    <img src="https://main.qcloudimg.com/raw/440d2b156cff9803833e4423d1e96373.png" width="600px">
+    <img src="https://main.qcloudimg.com/raw/440d2b156cff9803833e4423d1e96373.png" width="400px">
     <p align="center">实现逻辑</p>
 </p>
 
