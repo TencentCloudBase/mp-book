@@ -1,6 +1,10 @@
 # 用户管理
 
+## 功能概述
+
 本文对应实现例子为[tcb-demo-basic](https://github.com/TencentCloudBase/tcb-demo-basic)中的 `用户管理` 功能，可以通过该例子体验用户注册、登录、退出登录功能。
+
+## 体验功能
 
 <p align="center">
     <img src="https://main.qcloudimg.com/raw/f36ab01f3fd9e0f899c879f71d11fdff.png" width="500px">
@@ -49,7 +53,7 @@ wx.cloud.init({
 4. 在云开发的数据库中，新建 `collection`，名为 `users`。
 
 
-## 案例
+## 源码介绍
 
 参考了一些常用的小程序，比如知乎大学、百果园、摩拜等等，我们发现他们的登录方式都有相通之处：
 

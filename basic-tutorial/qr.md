@@ -1,6 +1,10 @@
 # 生成小程序二维码
 
+## 功能概述
+
 本文对应实现例子为[tcb-demo-basic](https://github.com/TencentCloudBase/tcb-demo-basic)中的 `小程序码` 功能，可以生成包括小程序码、小程序二维码。
+
+## 体验功能
 
 <p align="center">
     <img src="https://main.qcloudimg.com/raw/f36ab01f3fd9e0f899c879f71d11fdff.png" width="500px">
@@ -33,7 +37,9 @@ module.exports = {
 
 至此，服务就可以跑起来了。编译后，在列表中选择 `小程序码生成` 进入页面。
 
-## 二维码API
+## 源码介绍
+
+### 二维码API
 
 小程序有了云能力之后，我们来了解一下借助云能力的二维码生成体验是怎样的。
 
@@ -48,7 +54,7 @@ module.exports = {
 详细的说明请移步[官网](https://developers.weixin.qq.com/miniprogram/dev/api/open-api/qr-code/getWXACode.html)查看
 
 
-## 生成流程
+### 生成流程
 
 按以往传统的开发模式，需要额外搭建服务器部署一个后台服务，然后通过这个后台服务去请求API，拿到二维码图片之后再返回给小程序使用。
 
@@ -60,9 +66,7 @@ module.exports = {
 
 为了更方便地在云函数里使用二维码服务，我们在[wx-js-utils](https://www.npmjs.com/package/wx-js-utils)这个npm包里封装了上面官方提供的3个api。
 
-
-
-## 主要代码介绍
+### 主要代码介绍
 
 二维码生成服务是一个非常独立的小功能，逻辑也很简单。如果使用我们提供的[wx-js-utils](https://www.npmjs.com/package/wx-js-utils)npm包的话，只需要简单几行代码就可以实现了。
 下面是云函数实现的核心代码：
@@ -112,7 +116,7 @@ module.exports = {
   })
 ```
 
-## 小程序码的分类
+### 小程序码的分类
 
 这里有必要区分一下小程序二维码和小程序码这两个名词
 1. 小程序二维码。方形的最常见的二维码
