@@ -123,7 +123,7 @@ module.exports = {
 2. 小程序码。最大的特点是圆形的。
 效果分别如下图所示：
 
-<p align="left">
+<p align="center">
     <img style="width:250px;" src="https://main.qcloudimg.com/raw/307285cc762d10add331631a5229f7e1.png">
     <img style="width:250px;" src="https://main.qcloudimg.com/raw/f2115ab956a752c3a76bad96a7957c3e.png">
 </p>
