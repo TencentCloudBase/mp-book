@@ -11,15 +11,6 @@
     <p align="center">扫码体验</p>
 </p>
 
-## 准备工作
-
-微信支付，最主要的包括订单创建、发起支付、订单查询、申请退款、退款查询等等，本章会围绕这些最基本的功能去讲述如何基于云开发实现微信支付。
-
-开发前，建议先阅读以下相关的文档：
-
-1. [微信支付小程序文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_10&index=1)，该文档，尤其建议你先阅读 “开发前必读”、“业务说明”（如果小程序还没绑定微信支付） 和 “业务流程”。
-2. [微信小程序支持接口](https://developers.weixin.qq.com/miniprogram/dev/api/open-api/payment/wx.requestPayment.html)
-
 ## 体验 DEMO
 
 本章的案例代码，是在 [tcb-demo-basic](https://github.com/TencentCloudBase/tcb-demo-basic)。
@@ -80,6 +71,15 @@ wx.cloud.init({
 7. 在 `collections` `goods` 中，导入 `cloud/database/goods.json`。
 
 ## 源码介绍
+
+### 准备工作
+
+微信支付，最主要的包括订单创建、发起支付、订单查询、申请退款、退款查询等等，本章会围绕这些最基本的功能去讲述如何基于云开发实现微信支付。
+
+开发前，建议先阅读以下相关的文档：
+
+1. [微信支付小程序文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_10&index=1)，该文档，尤其建议你先阅读 “开发前必读”、“业务说明”（如果小程序还没绑定微信支付） 和 “业务流程”。
+2. [微信小程序支持接口](https://developers.weixin.qq.com/miniprogram/dev/api/open-api/payment/wx.requestPayment.html)
 
 ### 订单创建
 

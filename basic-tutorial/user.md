@@ -11,14 +11,6 @@
     <p align="center">扫码体验</p>
 </p>
 
-## 准备工作
-
-用户管理，包括用户的信息（昵称、性别、头像等的获取）、注册、登录、鉴权等，本章将会分别从围绕这几方面去讲述基于云开发如何做用户的管理。
-
-在开始 【小程序基础场景及开发教学】 整个章节之前，建议阅读一下以下的文档或者文章：
-- 阅读 [微信登录能力优化](https://developers.weixin.qq.com/community/develop/doc/000e2aac1ac838e29aa6c4eaf56409)  和 [获取用户信息](https://developers.weixin.qq.com/community/develop/doc/000c2424654c40bd9c960e71e5b009) 两篇文章。
-- 跟着[【文档导读】](../guide/readme.md)把云开发的文档读一下
-
 ## 体验 DEMO
 
 本章的案例代码，是在 [tcb-demo-basic](https://github.com/TencentCloudBase/tcb-demo-basic)。
@@ -54,6 +46,14 @@ wx.cloud.init({
 
 
 ## 源码介绍
+
+### 准备工作
+
+用户管理，包括用户的信息（昵称、性别、头像等的获取）、注册、登录、鉴权等，本章将会分别从围绕这几方面去讲述基于云开发如何做用户的管理。
+
+在开始 【小程序基础场景及开发教学】 整个章节之前，建议阅读一下以下的文档或者文章：
+- 阅读 [微信登录能力优化](https://developers.weixin.qq.com/community/develop/doc/000e2aac1ac838e29aa6c4eaf56409)  和 [获取用户信息](https://developers.weixin.qq.com/community/develop/doc/000c2424654c40bd9c960e71e5b009) 两篇文章。
+- 跟着[【文档导读】](../guide/readme.md)把云开发的文档读一下
 
 参考了一些常用的小程序，比如知乎大学、百果园、摩拜等等，我们发现他们的登录方式都有相通之处：
 
