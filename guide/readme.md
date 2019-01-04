@@ -28,7 +28,7 @@
 需要填入腾讯云的 `SecretId` 和 `SecretKey`。通过此[链接](https://www.qcloud.com/login/mp?s_url=https%3A%2F%2Fconsole.cloud.tencent.com%2Fcam%2Fcapi)登录小程序对应的腾讯云帐号(需要小程序管理员权限)，然后在[云API密钥](https://console.cloud.tencent.com/cam/capi) 里获取。
 
 <p align="center">
-    <img src="../assets/guide1.png" width="800px">
+    <img src="https://main.qcloudimg.com/raw/63512b321eee6c8779d6cb5b20f641cf.png" width="800px">
     <p align="center">云API密钥</p>
 </p>
 
@@ -117,6 +117,6 @@ exports.main = async (event, context) => {
 在云函数里，由于 Node 版本最低是 8.9，因此是天然支持 `async/await` 语法的。而在小程序端则不然。在微信开发者工具里，以及 `Android` 端手机（浏览器内核是 QQ浏览器的 X5），`async/await`是天然支持的，但 `iOS` 端手机在较低版本则不支持，因此需要引入额外的 `polyfill`。可把这个 [`polyfill`](../assets/runtime.js) 文件引用到有使用 `async/await` 的文件当中。
 
 <p align="center">
-    <img src="../assets/guide2.png" width="400px">
+    <img src="https://main.qcloudimg.com/raw/419b19a99124db5289d89ac1f98294f4.png" width="400px">
     <p align="center">在 js 里引入 polyfill</p>
 </p>

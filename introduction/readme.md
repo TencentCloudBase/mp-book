@@ -16,7 +16,7 @@
 ## 云开发 —— 基于无服务理念的小程序后台开发模式
 
 <p align="center">
-    <img src="../assets/introduction1.png" width="800px">
+    <img src="https://main.qcloudimg.com/raw/1bf920d978dbf950a46968fd029e698f.png" width="800px">
     <p align="center">云开发让你关心的工作更少</p>
 </p>
 
