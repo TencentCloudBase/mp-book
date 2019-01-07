@@ -4,18 +4,18 @@
 
 本文对应实现例子为[tcb-demo-video](https://github.com/TencentCloudBase/tcb-demo-video)。本增值服务，整合了腾讯云的[实时音视频](https://cloud.tencent.com/product/trtc)能力，通过云开发的云函数和数据库的能力，简化了配置的拉取和房间的管理。
 
-## 体验增值服务
+## 体验
 
 <p align="center">
     <img src="https://main.qcloudimg.com/raw/5dffe79d2f0b28f7212c17c6a77be62e.png" width="500px">
     <p align="center">扫码体验</p>
 </p>
 
-## 增值服务 DEMO 源码
+## DEMO 源码
 
 本章的案例代码在 [tcb-demo-video](https://github.com/TencentCloudBase/tcb-demo-video)。包含了小程序前端代码 （`client` 目录下）和云函数代码（`cloud` 目录下），需要在微信开发者工具中打开整个项目。下面将详细介绍 DEMO 的接入流程。
 
-## 增值服务 DEMO 接入流程
+## EMO 接入流程
 
 1. 在小程序的管理后台 【设置】-> 【基本设置】 -> 【服务类目】中添加允许视频直播类的管理。
 
@@ -70,7 +70,7 @@
 
 7. 预览小程序即可。
 
-## 增值服务源码介绍
+## 源码介绍
 
 ### WebRTC能力
 
