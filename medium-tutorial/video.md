@@ -42,7 +42,7 @@
     <p align="center">配置相关域名</p>
 </p>
 
-4. 通过此[微信小程序第三方绑定流程](https://www.qcloud.com/login/mp?s_url=https%3A%2F%2Fconsole.cloud.tencent.com%2Fcam%2Fcapi)登录小程序对应的腾讯云帐号(需要小程序管理员权限)，然后到腾讯云的[实时音视频](https://cloud.tencent.com/product/trtc)，开通服务并购买体验包，进入控制台，并获取以下配置信息：
+4. 通过[微信小程序第三方绑定流程](https://www.qcloud.com/login/mp?s_url=https%3A%2F%2Fconsole.cloud.tencent.com%2Fcam%2Fcapi)登录小程序对应的腾讯云帐号(需要小程序管理员权限)，然后到腾讯云的[实时音视频](https://cloud.tencent.com/product/trtc)，开通服务并购买体验包，进入控制台，并获取以下配置信息：
 
 (1) SDKAppid 和 accoutType
 
