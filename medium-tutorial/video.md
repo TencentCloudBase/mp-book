@@ -2,7 +2,7 @@
 
 ## 功能概述
 
-本文对应实现例子为[tcb-demo-video](https://github.com/TencentCloudBase/tcb-demo-video)。本增值服务，整合了腾讯云的[实时音视频](https://cloud.tencent.com/product/trtc)能力，通过云开发的云函数和数据库的能力，简化了配置的拉取和房间的管理。
+本增值服务，整合了腾讯云的[实时音视频](https://cloud.tencent.com/product/trtc)能力，通过云开发的云函数和数据库的能力，简化了配置的拉取和房间的管理。
 
 ## 体验
 
@@ -13,11 +13,10 @@
 
 ## DEMO 源码
 
-本章的案例代码在 [tcb-demo-video](https://github.com/TencentCloudBase/tcb-demo-video)。包含了小程序前端代码 （`client` 目录下）和云函数代码（`cloud` 目录下），需要在微信开发者工具中打开整个项目。下面将详细介绍 DEMO 的接入流程。
+本章的案例代码在 [tcb-demo-video](https://github.com/TencentCloudBase/tcb-demo-video)。包含了小程序前端代码 （`client` 目录下）和云函数代码（`cloud` 目录下）。
+## DEMO 接入流程
 
-## EMO 接入流程
-
-1. 在小程序的管理后台 【设置】-> 【基本设置】 -> 【服务类目】中添加允许视频直播类的管理。
+1. 登陆[小程序的管理后台](https://mp.weixin.qq.com/) , 选择【设置】> 【基本设置】 > 【服务类目】中添加允许视频直播类的管理。
 
 <p align="center">
     <img src="https://main.qcloudimg.com/raw/0e318bae69e6912475ad7a81763bc5b8.png" width="800px">
@@ -25,14 +24,14 @@
 </p>
 
 
-2. 在小程序管理后台【开发】-> 【接口设置】中，将`实时播放音视频流`和`实时录制音视频流`打开。
+2. 在小程序管理后台【开发】>【接口设置】中，将**实时播放音视频流**和**实时录制音视频流**打开。
 
 <p align="center">
     <img src="https://main.qcloudimg.com/raw/6e5a2678a8dc7c9d2658917c3c1ef1a0.png" width="800px">
     <p align="center">允许音视频播放和录制</p>
 </p>
 
-3. 在小程序管理后台【开发】-> 【开发设置】中，配置以下三个域名：
+3. 在小程序管理后台【开发】>【开发设置】中，配置以下三个域名：
     - https://official.opensso.tencent-cloud.com
     - https://yun.tim.qq.com
     - https://room.qcloud.com
@@ -43,32 +42,36 @@
     <p align="center">配置相关域名</p>
 </p>
 
-4. 通过此[链接](https://www.qcloud.com/login/mp?s_url=https%3A%2F%2Fconsole.cloud.tencent.com%2Fcam%2Fcapi)登录小程序对应的腾讯云帐号(需要小程序管理员权限)，然后到腾讯云的[实时音视频](https://cloud.tencent.com/product/trtc)，开通服务并购买体验包，进入控制台，并获取以下配置信息：
+4. 通过此[微信小程序第三方绑定流程](https://www.qcloud.com/login/mp?s_url=https%3A%2F%2Fconsole.cloud.tencent.com%2Fcam%2Fcapi)登录小程序对应的腾讯云帐号(需要小程序管理员权限)，然后到腾讯云的[实时音视频](https://cloud.tencent.com/product/trtc)，开通服务并购买体验包，进入控制台，并获取以下配置信息：
 
 (1) SDKAppid 和 accoutType
 
 <p align="center">
-    <img src="https://main.qcloudimg.com/raw/1f70ed8e62c032882e4b6eb6b4da6283.png" width="800px">
+    <img src="https://main.qcloudimg.com/raw/300ea0eb8cbd15a614c303b6f1508ba4.png" width="800px">
     <p align="center">SDKAppid 和 accoutType</p>
 </p>
 
-(2) 下载 private_key 文件
+(2) 点击下载公私钥，使用其中的 `private_key` 文件
 
 <p align="center">
-    <img src="https://main.qcloudimg.com/raw/eadb9d40ef162776f85f41cfb04bc57d.png" width="800px">
+    <img src="https://main.qcloudimg.com/raw/e17faec4233f466196ffd9a4a26fc366.png" width="800px">
     <p align="center">private_key 文件</p>
 </p>
 
-5. 请使用微信开发者工具打开 DEMO 源码，在根目录下的 project.config.json 文件，填写您的小程序 appid。
+5. 请使用[微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)打开源码，在根目录下的 `project.config.json` 文件，填写您的小程序 `appid`。
 
-6. 需要在云函数目录 `cloud/functions` 的函数 `webrtc-sig-api` 中，将 `private_key` 文件放到 `config` 目录下，并在`config`目录下，参照`example.js`文件，新建 `index.js` 文件，配置好SDKAppid 和 accoutType，然后上传部署所有的云函数。在云开发面板的数据库栏目中，创建 `webrtcRooms` 集合。
+6. 请按以下步骤完成最后的配置r操作。
+* 在云函数目录 `cloud/functions` 的函数 `webrtc-sig-api` 中，将 `private_key` 文件放到 `config` 目录下；
+* 在每个云函数目录的 `config` 目录下，参照 `example.js` 文件，新建 `index.js` 文件，并配置好 `SDKAppid` 和 `accountType`；
+* 上传部署所有的云函数;
+* 最后，在云开发面板的数据库栏目中，创建 `webrtcRooms` 集合。
 
 <p align="center">
     <img src="https://main.qcloudimg.com/raw/ad9a36f9dafde5721acf1b22499417cf.png" width="800px">
     <p align="center">创建 webrtcRooms 集合</p>
 </p>
 
-7. 预览小程序即可。
+7. 在微信开发者工具直接预览即可。
 
 ## 源码介绍
 
@@ -93,7 +96,7 @@ WebRTC 的能力的体验，主要是围绕源码中 `client/pages/webrtc-room` 
 
 * `webrtc-create-room` 函数主要用于创建房间，这里用到了数据库的读写，先要判断房间是否存在，如果不存在，则创建。
 
-该函数有一处逻辑值得解读下，此处是通过循环的方式，去检查房间 id ，以防生成了重复的 id。
+>! 该函数有一处逻辑值得解读下，此处是通过循环的方式，去检查房间 id ，以防生成了重复的 id。
 
 ```js
 // 循环检查数据，避免 generateRoomID 生成重复的roomID

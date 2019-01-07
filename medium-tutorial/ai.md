@@ -5,15 +5,15 @@
 本文对应实现例子为[tcb-demo-ai](https://github.com/TencentCloudBase/tcb-demo-ai)。本增值服务，AI智能图像能力是借助了腾讯云的[智能鉴黄](https://cloud.tencent.com/product/pornidentification)、[图片标签](https://cloud.tencent.com/product/image-tag)、[文字识别 OCR](https://cloud.tencent.com/product/ocr)、[人脸识别](https://cloud.tencent.com/product/facerecognition)、[人脸核身](https://cloud.tencent.com/product/facein)和[人脸融合](https://cloud.tencent.com/product/facefusion)功能，通过云开发的云函数和存储简化了素材的存储、配置的拉取和服务的调用 [image-node-sdk](https://github.com/TencentCloudBase/image-node-sdk) 来实现。
 
 ## 体验
-敬请期待
+后续会提供体验码。
 
 ## DEMO 源码
 本章的案例代码，是在 [tcb-demo-ai](https://github.com/TencentCloudBase/tcb-demo-ai)。
 
 ## DEMO 接入流程
-1. 请使用微信开发者工具打开 DEMO 源码，在根目录下的 project.config.json 文件，填写您的小程序 appid。
+1. 请使用[微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)打开 `DEMO` 源码，在根目录下的 `project.config.json` 文件，填写您的小程序 `appid`。
 
-2. 通过此[链接](https://www.qcloud.com/login/mp?s_url=https%3A%2F%2Fconsole.cloud.tencent.com%2Fcam%2Fcapi)登录小程序对应的腾讯云帐号(需要小程序管理员权限)，然后在[云API密钥](https://console.cloud.tencent.com/cam/capi) 里获取 `SecretId` 和 `SecretKey`。
+2. 通过此[微信小程序第三方绑定流程](https://www.qcloud.com/login/mp?s_url=https%3A%2F%2Fconsole.cloud.tencent.com%2Fcam%2Fcapi)登录小程序对应的腾讯云帐号(需要小程序管理员权限)，然后在[云API密钥](https://console.cloud.tencent.com/cam/capi) 里获取 `SecretId` 和 `SecretKey`。
 
 3. 在腾讯云的[智能图像控制台](https://console.cloud.tencent.com/ai)，开通相应的服务：
 
@@ -22,7 +22,7 @@
     <p align="center">开通服务</p>
 </p>
 
-4. 本案例，前端页面(client/pages/)和云函数(cloud/functions)一一对应，如下：
+4. 本案例，前端页面(`client/pages/`)和云函数(`cloud/functions`)一一对应，如下：
 
 |功能|前端页面|云函数|
 |--|--|--|
@@ -39,7 +39,7 @@
 |图片鉴黄|pornDetect|pornDetect|
 |图片标签|tagDetect|tagDetect|
 
-如果需要体验某个功能，需要在对应的云函数里参照 `config/example.js` 新建 `config/index.js`，并填入上面拿到的`SecretId` 和 `SecretKey`，然后创建并部署云函数。
+>! 如果需要体验某个功能，需要在对应的云函数里参照 `config/example.js` 新建 `config/index.js`，并填入上面拿到的`SecretId` 和 `SecretKey`，然后创建并部署云函数。
 
 5. 如果是体验以下的功能，还需要做额外的准备工作：
 
@@ -51,12 +51,12 @@
 * `model_id` (素材 ID)，可在[人脸融合控制台](https://console.cloud.tencent.com/ai/facemerge/index)中查看
 
 <p align="center">
-    <img src="https://main.qcloudimg.com/raw/a33308635e45b70fb2980b24a2df46c0.png" width="800px">
+    <img src="https://main.qcloudimg.com/raw/a10ec6cdc6400d94535ec5b76a0a01a3.png" width="800px">
     <p align="center">人脸融合--活动管理面板</p>
 </p>
 
 <p align="center">
-    <img src="https://main.qcloudimg.com/raw/178279776674941eff34681b5ac7aee9.png" width="800px">
+    <img src="https://main.qcloudimg.com/raw/06ffe29cb8f924aeff9e04cadca884fe.png" width="800px">
     <p align="center">人脸融合--活动素材管理面板</p>
 </p>
 
@@ -67,7 +67,7 @@
 本案例实现了该服务的一些基础能力。整个逻辑流程如下：
 
 <p align="center">
-    <img src="https://main.qcloudimg.com/raw/440d2b156cff9803833e4423d1e96373.png" width="400px">
+    <img src="https://main.qcloudimg.com/raw/23767c3ef57e2fbbb0ab721ff383535e.png" width="600px">
     <p align="center">实现逻辑</p>
 </p>
 
