@@ -65,13 +65,7 @@
     <p align="center">private_key 文件</p>
 </p>
 
-<<<<<<< HEAD
 2. 请按以下步骤完成最后的配置操作。
-=======
-5. 请使用[微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)打开源码，在根目录下的 `project.config.json` 文件，填写您的小程序 `appid`。
-
-6. 请按以下步骤完成最后的配置操作。
->>>>>>> f570fe8520d742dcddede692ce583240eea2050a
 * 在云函数目录 `cloud/functions` 的函数 `webrtc-sig-api` 中，将 `private_key` 文件放到 `config` 目录下；
 * 在每个云函数目录的 `config` 目录下，参照 `example.js` 文件，新建 `index.js` 文件，并配置好 `SDKAppid` 和 `accountType`；
 * 上传部署所有带有 `webrtc` 前缀的云函数;
