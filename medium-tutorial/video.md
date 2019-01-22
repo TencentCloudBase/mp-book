@@ -43,7 +43,7 @@
 
 4. 请使用[微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)打开源码，在根目录下的 `project.config.json` 文件，填写您的小程序 `appid`。
 
-5. 如果需要体验实时音视频或云直播的服务，还需要分别按照两者不同的接入方式进行配置，详参后面两部份内容。
+5. 如果需要体验实时音视频或云直播的服务，还需要分别按照两者不同的接入方式进行配置，详参后面两部份内容。
 
 ## DEMO 接入流程 (实时音视频相关)
 
@@ -58,7 +58,7 @@
     <p align="center">SDKAppid 和 accoutType</p>
 </p>
 
-(2) 点击下载公私钥，使用其中的 `private_key` 文件
+(2) 点击下载公私钥，使用其中的 `private_key` 文件
 
 <p align="center">
     <img src="https://main.qcloudimg.com/raw/e17faec4233f466196ffd9a4a26fc366.png" width="800px">
@@ -85,7 +85,7 @@
 1. 通过[微信小程序第三方绑定流程](https://www.qcloud.com/login/mp?s_url=https%3A%2F%2Fconsole.cloud.tencent.com%2Fcam%2Fcapi)登录小程序对应的腾讯云帐号(需要小程序管理员权限)，然后到腾讯云的[云直播](https://cloud.tencent.com/product/lvb)，开通服务并自动获得体验包，进入控制台，进行以下配置：
 
 （1）配置推流和播放域名
-云直播自2018年底不再支持通用域名，需要用户自己配置域名，还要在域名配置的站点，如 DNSPOD，万网等，配置域名的 CNAME。
+云直播自2018年底不再支持通用域名，需要用户自己配置域名，还要在域名配置的站点，如 DNSPOD，万网等，配置域名的 CNAME。
 
 <p align="center">
     <img src="https://main.qcloudimg.com/raw/bca8a94be008dcca78a589159d82773b.png" width="800px">
@@ -113,7 +113,7 @@
 
 <p align="center">
     <img src="https://main.qcloudimg.com/raw/67705a0e06003f6168bd8a99e2a0ee99.png" width="400px">
-    <p align="center">liveAppID 与账户的 AppID 一致</p>
+    <p align="center">liveAppID 与账户的 AppID 一致</p>
 </p>
 
 到云直播控制台中的[直播码接入](https://console.cloud.tencent.com/live/livecodemanage)，获取 bizid 和 pushSecretKey。
@@ -199,7 +199,7 @@ while (await isRoomExist(roomInfo.roomID)) {
 
 云函数分别有创建房间(liveroom-create-room)、退出房间(liveroom-quit-room)、获取房间信息(liveroom-get-room-info)、获取房间列表(liveroom-get-room-list)4个云函数。
 
-* `liveroom-create-room` 用于主播创建房间，同时根据配置信息生成推流和播放流地址。
+* `liveroom-create-room` 用于主播创建房间，同时根据配置信息生成推流和播放流地址。
 
 * `liveroom-quit-room` 函数主要用于退出房间，如果是主播推出房间，则房间直播清除，如果是观众退出，则只会把该观众的 `openid` 清理掉。
 
