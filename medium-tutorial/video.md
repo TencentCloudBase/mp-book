@@ -66,7 +66,7 @@
 </p>
 
 2. 请按以下步骤完成最后的配置操作。
-* 在云函数目录 `cloud/functions` 的函数 `webrtc-sig-api` 中，将 `private_key` 文件放到 `config` 目录下；
+* 在云函数目录 `cloud/functions` 的函数 `webrtcroom-enter-room` 中，将 `private_key` 文件放到 `config` 目录下；
 * 在每个云函数目录的 `config` 目录下，参照 `example.js` 文件，新建 `index.js` 文件，并配置好 `SDKAppid` 和 `accountType`；
 * 上传部署所有带有 `webrtc` 前缀的云函数;
 * 最后，在云开发面板的数据库栏目中，创建 `webrtcRooms` 集合。
@@ -142,9 +142,9 @@
 
 #### WebRTC 能力
 
-WebRTC 的能力的体验，主要是围绕源码中 `client/pages/webrtc-room` 里面的 `join-room` 和 `room` 两个目录，一个是手动输入房间号进入房间，另一个是视频房间，还涉及到的是 `cloud/functions/webrtc-sig-api` 目录，此云函数主要用于填写实时音视频的配置后，进行加密，将加密好的信息传到小程序端，才能正常使用 WebRTC 视频通话能力。
+WebRTC 的能力的体验，主要是围绕源码中 `client/pages/webrtc-room` 里面的 `join-room` 和 `room` 两个目录，一个是手动输入房间号进入房间，另一个是视频房间，还涉及到的是 `cloud/functions/webrtcroom-enter-room` 目录，此云函数主要用于填写实时音视频的配置后，进行加密，将加密好的信息传到小程序端，才能正常使用 WebRTC 视频通话能力。
 
-云函数 `webrtc-sig-api` 中，`WebRTCSigApi.js` 是官方提供的[签名逻辑文件](https://github.com/TencentVideoCloudMLVBDev/usersig_server_source/blob/master/nodejs/WebRTCSigApi.js)，而 `index.js`，不外乎是调用 `WebRTCSigApi.js` 中的方法，然后将 `privateMapKey`, `userSig` 提供到小程序，有了这两个信息，小程序端才能正常将直播流唤起。
+云函数 `webrtcroom-enter-room` 中，`libs/sign.js` 是官方提供的[签名逻辑文件](https://github.com/TencentVideoCloudMLVBDev/usersig_server_source/blob/master/nodejs/WebRTCSigApi.js)，而 `index.js`，不外乎是调用 `libs/sign.js` 中的方法，然后将 `privateMapKey`, `userSig` 提供到小程序，有了这两个信息，小程序端才能正常将直播流唤起。
 
 #### 房间管理
 
@@ -159,9 +159,9 @@ WebRTC 的能力的体验，主要是围绕源码中 `client/pages/webrtc-room` 
 
 云函数分别有创建房间(webrtc-create-room)、进入房间(webrtc-enter-room)、退出房间(webrtc-quit-room)、获取房间信息(webrtc-get-room-info)、获取房间列表(webrtc-get-room-list)5个云函数。
 
-* `webrtc-create-room` 函数主要用于创建房间，这里用到了数据库的读写，先要判断房间是否存在，如果不存在，则创建。
+* `webrtcroom-enter-room` 函数主要用于创建房间，这里用到了数据库的读写，先要判断房间是否存在，如果不存在，则创建。
 
->! 该函数有一处逻辑值得解读下，此处是通过循环的方式，去检查房间 id ，以防生成了重复的 id。
+>! 该函数的 `create.js` 文件中有一处逻辑值得解读下，此处是通过循环的方式，去检查房间 id ，以防生成了重复的 id。
 
 ```js
 // 循环检查数据，避免 generateRoomID 生成重复的roomID
@@ -170,21 +170,21 @@ while (await isRoomExist(roomInfo.roomID)) {
 }
 ```
 
-* `webrtc-enter-room` 函数主要用于进入房间，如果房间存在，则将用户的 `openid` 写入房间观众字段，如果房间不存在，则调用 `webrtc-create-room` 进行房间创建。
+此外，该函数还应用于进入房间，如果房间存在，则将用户的 `openid` 写入房间观众字段，如果房间不存在，则进行房间创建。
 
-* `webrtc-quit-room` 函数主要用于退出房间，如果房间还有观众，则将退出者的 `openid` 清除，如果没有观众了，则把房间数据清理掉。
+* `webrtcroom-quit-room` 函数主要用于退出房间，如果房间还有观众，则将退出者的 `openid` 清除，如果没有观众了，则把房间数据清理掉。
 
-* `webrtc-get-room-info` 函数主要用于获取房间数据。
+* `webrtcroom-get-room-info` 函数主要用于获取房间数据。
 
-* `webrtc-get-room-list` 函数主要用于获取房间列表数据。
+* `webrtcroom-get-room-list` 函数主要用于获取房间列表数据。
 
 ### 云直播服务
 
 #### 直播能力
 
-直播能力的体验，主要是围绕源码中 `client/pages/live-room` 中的 `create-room` 和 `room` 两个目录，一个是主播输入房间名创建房间，另一个是直播房间。
+直播能力的体验，主要是围绕源码中 `client/pages/live-room` 中的 `join-room` 和 `room` 两个目录，一个是主播输入房间名创建房间，另一个是直播房间。
 
-在 `create-room` 中会调用云函数 `liveroom-create-room`，通过这个函数的地址生成算法，生成推流和播放流两个地址，进入房间后，如果是主播进入，则拿到推流地址塞入推流插件；如果是观众进入，则拿到播放流地址塞入播放插件中。
+在 `join-room` 中会调用云函数 `liveroom-enter-room`，通过这个函数的地址生成算法，生成推流和播放流两个地址，进入房间后，如果是主播进入，则拿到推流地址塞入推流插件；如果是观众进入，则拿到播放流地址塞入播放插件中。
 
 #### 房间管理
 
@@ -199,7 +199,7 @@ while (await isRoomExist(roomInfo.roomID)) {
 
 云函数分别有创建房间(liveroom-create-room)、退出房间(liveroom-quit-room)、获取房间信息(liveroom-get-room-info)、获取房间列表(liveroom-get-room-list)4个云函数。
 
-* `liveroom-create-room` 用于主播创建房间，同时根据配置信息生成推流和播放流地址。
+* `liveroom-enter-room` 用于主播创建房间，同时根据配置信息生成推流和播放流地址。
 
 * `liveroom-quit-room` 函数主要用于退出房间，如果是主播推出房间，则房间直播清除，如果是观众退出，则只会把该观众的 `openid` 清理掉。
 
