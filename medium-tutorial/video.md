@@ -4,6 +4,12 @@
 
 本增值服务，整合了腾讯云的[实时音视频](https://cloud.tencent.com/product/trtc)能力，和[云直播](https://cloud.tencent.com/product/lvb)能力，通过云开发的云函数和数据库的能力，简化了配置的拉取和房间的管理。实时音视频一般用于客服通话场，而云直播侧一般用于秀场、游戏直播等场景。
 
+## 图片预览
+
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/3348398/52934987-0cd4ea00-3393-11e9-90c9-0e10d990e05a.png" width="500px">
+</p>
+
 ## 体验
 
 <p align="center">

@@ -4,6 +4,12 @@
 
 本增值服务，整合了腾讯云的[短信](https://cloud.tencent.com/document/product/382)能力，通过云开发的云函数和数据库的能力，简化了短信验证码、通知等场景。
 
+## 图片预览
+
+<p align="center">
+    <img src="https://main.qcloudimg.com/raw/0b466d99502f75705ad672d46b8f129b.png" width="1000px">
+</p>
+
 ## DEMO 源码
 
 本章的案例代码在 [tcb-demo-sms](https://github.com/TencentCloudBase/tcb-demo-vidsmseo)。包含了小程序前端代码 （`client` 目录下）和云函数代码（`cloud` 目录下）。
