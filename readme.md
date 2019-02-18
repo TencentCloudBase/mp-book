@@ -12,6 +12,7 @@
 * [小程序中级场景及开发教学](medium-tutorial/readme.md)
     - [音视频服务](medium-tutorial/video.md)
     - [AI智能图像服务](medium-tutorial/ai.md)
+    - [短信服务](medium-tutorial/sms.md)
 
 
 未完待续...
