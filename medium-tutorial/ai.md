@@ -2,7 +2,9 @@
 
 ## 功能概述
 
-本文对应实现例子为[tcb-demo-ai](https://github.com/TencentCloudBase/tcb-demo-ai)。本增值服务，AI智能图像能力是借助了腾讯云的[智能鉴黄](https://cloud.tencent.com/product/pornidentification)、[图片标签](https://cloud.tencent.com/product/image-tag)、[文字识别 OCR](https://cloud.tencent.com/product/ocr)、[人脸识别](https://cloud.tencent.com/product/facerecognition)、[人脸核身](https://cloud.tencent.com/product/facein)和[人脸融合](https://cloud.tencent.com/product/facefusion)功能，通过云开发的云函数和存储简化了素材的存储、配置的拉取和服务的调用 [image-node-sdk](https://github.com/TencentCloudBase/image-node-sdk) 来实现。
+本文对应实现例子为[tcb-demo-ai](https://github.com/TencentCloudBase/tcb-demo-ai)。本增值服务，AI智能图像能力是借助了腾讯云的[人脸识别](https://cloud.tencent.com/product/facerecognition/developer)、[人脸核身](https://cloud.tencent.com/product/faceid/developer)和[人脸融合](https://cloud.tencent.com/product/facefusion/developer)功能，通过云开发的云函数和存储简化了素材的存储、配置的拉取和服务的调用 [tcb-servicve-sdk](https://github.com/TencentCloudBase/tcb-service-sdk) 来实现。
+
+后续还会陆续支持[智能鉴黄](https://cloud.tencent.com/product/pornidentification)、[图片标签](https://cloud.tencent.com/product/image-tag)、[文字识别 OCR](https://cloud.tencent.com/product/ocr)等服务。
 
 ## 体验
 后续会提供体验码。
@@ -26,29 +28,20 @@
 
 |功能|前端页面|云函数|
 |--|--|--|
-|银行卡识别|bankCard|bankCard|
-|名片识别（V2)|bizCard|bizCard|
-|营业执照识别|bizLicense|bizLicense|
+|人脸融合|face-fusion|FaceFusion|
+|活体人脸检测|liveness-recognition|GetLiveCode 和 LivenessRecognition|
+|身份信息认证|idcard-verification|IdCardVerification|
 |行驶证驾驶证识别|drivingLicence|drivingLicence|
-|人脸融合|faceFuse|faceFuse|
-|通用印刷体识别|general|general|
-|手写体识别|handWriting|handWriting|
-|活体检测—获取唇语验证|idCardLiveDetectFour|idCardLiveDetectFour & faceLiveGetFour|
-|身份证识别|idCard|idCard|
-|车牌号识别|plate|plate|
-|图片鉴黄|pornDetect|pornDetect|
-|图片标签|tagDetect|tagDetect|
 
->! 如果需要体验某个功能，需要在对应的云函数里参照 `config/example.js` 新建 `config/index.js`，并填入上面拿到的`SecretId` 和 `SecretKey`，然后创建并部署云函数。
+>! 如果需要体验某个功能，需要在对应的云函数里参照 `config/example.js` 新建 `config/index.js`，并填入上面拿到的`SecretID` 和 `SecretKey`，然后创建并部署云函数。
 
 5. 如果是体验以下的功能，还需要做额外的准备工作：
 
 ### 人脸融合
 如果想体验人脸融合，开通服务后，需要【创建活动】并【添加素材】，要获得以下配置：
 
-* `uin`（账号 ID），可在[账号信息](https://console.cloud.tencent.com/developer)中查看
-* `project_id` (活动 ID)，可在[人脸融合控制台](https://console.cloud.tencent.com/ai/facemerge/index)中查看
-* `model_id` (素材 ID)，可在[人脸融合控制台](https://console.cloud.tencent.com/ai/facemerge/index)中查看
+* `ProjectId` (活动 ID)，可在[人脸融合控制台](https://console.cloud.tencent.com/ai/facemerge/index)中查看
+* `ModelId` (素材 ID)，可在[人脸融合控制台](https://console.cloud.tencent.com/ai/facemerge/index)中查看
 
 <p align="center">
     <img src="https://main.qcloudimg.com/raw/a10ec6cdc6400d94535ec5b76a0a01a3.png" width="800px">
@@ -62,7 +55,7 @@
 
 ## 源码介绍
 
-### 活体检测—获取唇语验证
+### 活体人脸核身
 
 本案例实现了该服务的一些基础能力。整个逻辑流程如下：
 
@@ -71,30 +64,48 @@
     <p align="center">实现逻辑</p>
 </p>
 
-其中云函数 `idCardLiveDetectFour` 的大体逻辑如下：
+其中云函数 `LivenessRecognition` 的大体逻辑如下：
 
 ```js
-// 首先把视频下载下来，获得视频内容的字符串内容
-let res = await cloud.downloadFile({
-    fileID: video
-})
+const {
+  IdCard,
+  Name,
+  VideoFileID,
+  LivenessType = 'SILENT',
+  ValidateData
+} = event
 
-const buffer = res.fileContent
+try {
+  // 获取视频内容的字符合串
+  let fileContent = await tcbService.utils.getContent({
+      fileID: VideoFileID
+  })
 
-// 以 form-data 的格式，传到人脸核身服务进行校验
-let formData = {
-    validate_data: number,
-    video: buffer,
-    idcard_number: idcard,
-    idcard_name: name
+  if (!fileContent) {
+      return { code: 10002, message: 'fileContent is empty' }
+  }
+
+  const result = await tcbService.callService({
+      service: 'ai',
+      action: 'LivenessRecognition',
+      data: {
+      IdCard,
+        Name,
+        VideoBase64: fileContent.toString('base64'), // 视频内容转 base64
+        LivenessType,
+        ValidateData
+      },
+      options: {
+        secretID: SecretID,
+        secretKey: SecretKey // 调用其它腾讯云账号的 AI 资源
+    }
+  })
+
+  return result
 }
-
-const result = await imgClient.faceIdCardLiveDetectFour({
-    headers: {
-        "content-type": "multipart/form-data"
-    },
-    formData,
-});
+catch (e) {
+  return { code: 10001, message: e.message }
+}
 ```
 
 在小程序端，需要有类似的遮罩，才能提供视频通过的概率。
