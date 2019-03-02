@@ -12,7 +12,7 @@
 
 ## DEMO 源码
 
-本章的案例代码在 [tcb-demo-sms](https://github.com/TencentCloudBase/tcb-demo-vidsmseo)。包含了小程序前端代码 （`client` 目录下）和云函数代码（`cloud` 目录下）。
+本章的案例代码在 [tcb-demo-sms](https://github.com/TencentCloudBase/tcb-demo-sms)。包含了小程序前端代码 （`client` 目录下）和云函数代码（`cloud` 目录下）。
 
 ## DEMO 接入流程
 1. 请使用[微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)打开 `DEMO` 源码，在根目录下的 `project.config.json` 文件，填写您的小程序 `appid`。
