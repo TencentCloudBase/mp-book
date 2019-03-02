@@ -31,7 +31,7 @@ module.exports = {
 
 其 `fileID` 为：`cloud://tcb-demo-u8s8ec.8888-tcb-demo-u8s8ec/qr/square.png`，则 `bucketPrefix` 为 `cloud://tcb-demo-u8s8ec.8888-tcb-demo-u8s8ec/`
 
-2.到控制台文件存储中顶级目录中创建一个名为 `qr` 的目录
+2.到控制台创建一个名为 `access_token` 的数据集合，用于给 [`wx-js-utils`](https://github.com/lcxfs1991/wx-js-utils) 类库缓存 `access_token` 的数值。
 
 3.上传云函数到服务器并部署服务
 

@@ -70,6 +70,8 @@ wx.cloud.init({
 
 7. 在 `collections` `goods` 中，导入 `cloud/database/goods.json`。
 
+8. 到控制台创建一个名为 `access_token` 的数据集合，用于给 [`wx-js-utils`](https://github.com/lcxfs1991/wx-js-utils) 类库缓存 `access_token` 的数值。
+
 ## 源码介绍
 
 ### 准备工作

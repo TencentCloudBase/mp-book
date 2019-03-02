@@ -54,6 +54,8 @@ module.exports = {
 
 6. 打开云控制台，选择 `数据库` -〉 `添加集合`，新建一个名为 `reserves` 的集合。
 
+7. 到控制台创建一个名为 `access_token` 的数据集合，用于给 [`wx-js-utils`](https://github.com/lcxfs1991/wx-js-utils) 类库缓存 `access_token` 的数值。
+
 做完以上步骤，编译预览就可以体验本demo了。
 
 
