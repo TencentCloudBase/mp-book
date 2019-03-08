@@ -7,7 +7,10 @@
 后续还会陆续支持[智能鉴黄](https://cloud.tencent.com/product/pornidentification)、[图片标签](https://cloud.tencent.com/product/image-tag)、[文字识别 OCR](https://cloud.tencent.com/product/ocr)等服务。
 
 ## 体验
-后续会提供体验码。
+<p align="center">
+    <img src="https://main.qcloudimg.com/raw/fb6e0a10f9870824e19b06170f4ed558.png" width="500px">
+    <p align="center">扫码体验</p>
+</p>
 
 ## DEMO 源码
 本章的案例代码，是在 [tcb-demo-ai](https://github.com/TencentCloudBase/tcb-demo-ai)。
