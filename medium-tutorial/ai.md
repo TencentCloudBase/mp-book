@@ -29,12 +29,15 @@
 
 4. 本案例，前端页面(`client/pages/`)和云函数(`cloud/functions`)一一对应，如下：
 
-|功能|前端页面|云函数|
-|--|--|--|
-|人脸融合|face-fusion|FaceFusion|
-|活体人脸检测|liveness-recognition|GetLiveCode 和 LivenessRecognition|
-|身份信息认证|idcard-verification|IdCardVerification|
-|行驶证驾驶证识别|drivingLicence|drivingLicence|
+|功能|前端页面|云函数
+|--|--|--
+|人脸融合|face-fusion|FaceFusion
+|活体人脸检测|liveness-recognition|GetLiveCode 和 LivenessRecognition
+|身份信息认证|idcard-verification|IdCardVerification
+|人脸检测与分析|face-detect|DetectFace
+|通用印刷体识别|ocr-general|GeneralBasicOCR
+|身份证识别|ocr-idcard|IDCardOCR
+
 
 >! 如果需要体验某个功能，需要在对应的云函数里参照 `config/example.js` 新建 `config/index.js`，并填入上面拿到的`SecretID` 和 `SecretKey`，然后创建并部署云函数。
 
@@ -63,7 +66,7 @@
 本案例实现了该服务的一些基础能力。整个逻辑流程如下：
 
 <p align="center">
-    <img src="https://main.qcloudimg.com/raw/23767c3ef57e2fbbb0ab721ff383535e.png" width="600px">
+    <img src="https://main.qcloudimg.com/raw/dd1666f2e7f9b18f9ac009ef0c46dce1.png" width="600px">
     <p align="center">实现逻辑</p>
 </p>
 
