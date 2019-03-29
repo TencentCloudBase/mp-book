@@ -6,7 +6,7 @@
  */
 
 !(function(global) {
-    "use strict";
+    // "use strict";
   
     var Op = Object.prototype;
     var hasOwn = Op.hasOwnProperty;
