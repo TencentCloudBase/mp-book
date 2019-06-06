@@ -2,7 +2,7 @@
 
 ## 目录
 
-* [功能介绍](introduction/readme.md)
+* [功能介绍](https://github.com/TencentCloudBase/mp-book/blob/master/introduction/%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D.md)
 * [文档导读](https://github.com/TencentCloudBase/mp-book/blob/master/guide/%E6%96%87%E6%A1%A3%E5%AF%BC%E8%AF%BB.md)
 * [小程序基础场景及开发教学](https://github.com/TencentCloudBase/mp-book/blob/master/basic-tutorial/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80%E5%9C%BA%E6%99%AF%E5%8F%8A%E5%BC%80%E5%8F%91%E6%95%99%E5%AD%A6.md)
     - [用户管理](https://github.com/TencentCloudBase/mp-book/blob/master/basic-tutorial/%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86.md)
