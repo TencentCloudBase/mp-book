@@ -18,7 +18,7 @@
 是的，参考[兼容性问题](https://developers.weixin.qq.com/miniprogram/dev/framework/client-lib/)进行配置。
 
 ### 2. 云开发的服务，可以在哪些端被调用？不同端会有哪些的调用能力的不同？
-可以在小程序端和服务端调用。小程序端是通过内置的接口调用。而服务端，这里包括原有的服务和云函数，可以通过 `wx-server-sdk` 或者  `tcb-admin-node` 其中一个 node sdk 进行调用，前者是基于后者进行二次开发的。如果希望开发体验与小程序端一致，可采用 `wx-server-sdk`。小程序端的调用由于安全问题，会由较多的限制，而在服务端，则是可拥有管理员的权限（所以你会发现 `tcb-admin-node` 带有 `admin` 字眼，表示具有管理员权限）。
+可以在小程序端和服务端调用。小程序端是通过内置的接口调用。而服务端，这里包括原有的服务和云函数，可以通过 `wx-server-sdk` 或者  `tcb-admin-node` 其中一个 node sdk 进行调用，前者是基于后者进行二次开发的。如果希望开发体验与小程序端一致，可采用 `wx-server-sdk`。小程序端的调用由于安全问题，会有较多的限制，而在服务端，则是可拥有管理员的权限（所以你会发现 `tcb-admin-node` 带有 `admin` 字眼，表示具有管理员权限）。
 
 小程序端的 API 文档，可在 [小程序端 API 文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-client-api/) 查看。
 服务端的 API 文档，可在 [云开发 Server API 文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-server-api/) 查看。
