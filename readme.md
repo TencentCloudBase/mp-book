@@ -8,7 +8,7 @@
     - [用户管理](https://github.com/TencentCloudBase/mp-book/blob/master/basic-tutorial/%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86.md)
     - [小程序码生成](basic-tutorial/qr.md)
     - [模板消息和统一服务消息](basic-tutorial/message.md)
-    - [微信支付](basic-tutorial/pay.md)
+    - [微信支付](https://github.com/TencentCloudBase/mp-book/blob/master/basic-tutorial/%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98.md)
 * [小程序中级场景及开发教学](medium-tutorial/readme.md)
     - [音视频服务](medium-tutorial/video.md)
     - [AI智能图像服务](medium-tutorial/ai.md)
