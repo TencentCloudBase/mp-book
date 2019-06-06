@@ -4,7 +4,7 @@
 
 ## 相关文档介绍
 
-如果你希望使用云开发的能力，那们[小程序的文档](https://developers.weixin.qq.com/miniprogram/dev/api/report/wx.reportMonitor.html)，你需要关注的部份主要有三个，分别是 `框架`,  `API` 和 `小程序·云开发`。
+如果你希望使用云开发的能力，那么[小程序·云开发的文档](https://tencentcloudbase.github.io/#/devguide/)，你需要关注的部份主要有三个，分别是 `框架`,  `API` 和 `小程序·云开发`。
 
 `框架` 里面的 `开放能力` 部份，涉及到不少后台相关的流程，包括用户信息、消息、卡券等等，这里可以认证阅读了解大概的开发流程。
 
@@ -15,7 +15,7 @@
 `小程序·云开发` 文档里，则是所有与小程序·云开发相关的文档内容。下面会通过用户关心的的一些问题，介绍在哪里可以找到对应的文档。
 
 ### 1. 云开发是可以用于所有的小程序基础库吗？
-是的，参考[兼容性问题](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html#%E5%85%BC%E5%AE%B9%E6%80%A7%E9%97%AE%E9%A2%98)进行配置。
+是的，参考[兼容性问题](https://developers.weixin.qq.com/miniprogram/dev/framework/client-lib/)进行配置。
 
 ### 2. 云开发的服务，可以在哪些端被调用？不同端会有哪些的调用能力的不同？
 可以在小程序端和服务端调用。小程序端是通过内置的接口调用。而服务端，这里包括原有的服务和云函数，可以通过 `wx-server-sdk` 或者  `tcb-admin-node` 其中一个 node sdk 进行调用，前者是基于后者进行二次开发的。如果希望开发体验与小程序端一致，可采用 `wx-server-sdk`。小程序端的调用由于安全问题，会由较多的限制，而在服务端，则是可拥有管理员的权限（所以你会发现 `tcb-admin-node` 带有 `admin` 字眼，表示具有管理员权限）。
