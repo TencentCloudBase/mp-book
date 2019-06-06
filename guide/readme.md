@@ -107,7 +107,7 @@ exports.main = async (event, context) => {
 ```
 
 ### 6. 是否可以批量导入导出数据？
-可以的，请参考 [数据库导入](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/database/import.html) 和 [数据库导出](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/database/export.html)
+可以的，请参考 [数据库导入](https://tencentcloudbase.github.io/#/devguide/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE) 和 [数据库导出](https://tencentcloudbase.github.io/#/devguide/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%AF%BC%E5%87%BA%E6%95%B0%E6%8D%AE)
 
 ### 7. 数据库的在不同端的权限是怎么样的？
 小程序端的权限没有服务端那么高，请参 [权限控制](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/database/permission.html)
